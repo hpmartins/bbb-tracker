@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 
 // Define the Participant interface
 export interface IParticipante {
+    _id: {
+        nome: string;
+        modified: Date;
+    };
     nomeId: string;
     abandono: boolean;
     aniversario: string;
@@ -18,7 +22,6 @@ export interface IParticipante {
     instagram: string | null;
     lider: boolean;
     membro: string;
-    modified: string;
     monstro: boolean;
     nomeCompleto: string;
     nomePopular: string;
@@ -43,7 +46,10 @@ export interface IParticipante {
 // Define the Mongoose schema for Participant
 const participanteSchema = new mongoose.Schema(
     {
-        nomeId: String,
+        _id: {
+            nome: String,
+            modified: Date
+        },
         abandono: Boolean,
         aniversario: String,
         anjo: Boolean,
@@ -58,7 +64,6 @@ const participanteSchema = new mongoose.Schema(
         instagram: String,
         lider: Boolean,
         membro: String,
-        modified: String,
         monstro: Boolean,
         nomeCompleto: String,
         nomePopular: String,
