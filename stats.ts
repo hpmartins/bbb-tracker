@@ -81,7 +81,7 @@ const updateAll = async () => {
 };
 
 const scheduleTasks = () => {
-    cron.schedule('0,15,30,45 * * * *', async () => {
+    cron.schedule('*/10 * * * *', async () => {
         log('atualizando')
         await updateAll();
     });
