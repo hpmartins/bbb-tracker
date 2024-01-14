@@ -10,6 +10,10 @@ const limiter = new Bottleneck({
     minTime: 1000
 });
 
+const log = (text: string) => {
+    console.log(`[${new Date().toLocaleTimeString()}] [bbb-stats] ${text}`);
+};
+
 const getData = async (nome: string): Promise<IParticipante | undefined> =>
     limiter
         .schedule(() =>
@@ -64,7 +68,7 @@ const updateAll = async () => {
         }
         const data = await getData(nome);
         if (data && dayjs(data._id.modified).isAfter(await getLastModified(nome))) {
-            console.log(`Atualizando dados de ${nome}`);
+            log(`atualizando dados de ${nome}`);
             await Participante.updateOne(
                 {
                     _id: data._id
@@ -78,6 +82,7 @@ const updateAll = async () => {
 
 const scheduleTasks = () => {
     cron.schedule('0,15,30,45 * * * *', async () => {
+        log('atualizando')
         await updateAll();
     });
 };

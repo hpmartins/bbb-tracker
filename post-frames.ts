@@ -21,8 +21,13 @@ const agent = new BskyAgent({
     service: 'https://bsky.social/'
 });
 
+const log = (text: string) => {
+    console.log(`[${new Date().toLocaleTimeString()}] [bbb-post-frames] ${text}`);
+};
+
 const scheduleTasks = () => {
-    cron.schedule('*/10 * * * *', async () => {
+    cron.schedule('0,10,20,30,40,50 * * * *', async () => {
+        log('postando...');
         await postFrames();
     });
 };
@@ -160,7 +165,6 @@ const run = async () => {
         password: process.env.BSKY_PWD ?? ''
     });
 
-    await postFrames();
     scheduleTasks();
 };
 
