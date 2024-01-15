@@ -33,6 +33,8 @@ const run = async () => {
         let participants = await getParticipants();
 
         participants = participants.filter(x => !x.eliminado);
+        participants = participants.sort((a,b) => b.estalecas - a.estalecas)
+        participants = participants.sort((a,b) => Number(b.paredao) - Number(a.paredao))
 
         const lider = participants.filter((x) => x.lider);
         const vip = participants.filter((x) => x.grupo === 'VIP');

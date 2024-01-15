@@ -1141,6 +1141,9 @@ html {
 .w-12 {
   width: 3rem;
 }
+.w-14 {
+  width: 3.5rem;
+}
 .max-w-3xl {
   max-width: 48rem;
 }
