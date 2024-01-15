@@ -11,7 +11,14 @@ const getParticipants = async () => {
                 $push: '$$ROOT'
             }
         })
-        .sort({ 'list._id.modified': -1 })
+        .addFields({
+            list: {
+                $sortArray: {
+                    input: '$list',
+                    sortBy: { '_id.modified': -1 }
+                }
+            }
+        })
         .append({
             $replaceWith: { $arrayElemAt: ['$list', 0] }
         })
@@ -32,9 +39,9 @@ const run = async () => {
     app.get('/', async (req, res) => {
         let participants = await getParticipants();
 
-        participants = participants.filter(x => !x.eliminado);
-        participants = participants.sort((a,b) => b.estalecas - a.estalecas)
-        participants = participants.sort((a,b) => Number(b.paredao) - Number(a.paredao))
+        participants = participants.filter((x) => !x.eliminado);
+        participants = participants.sort((a, b) => b.estalecas - a.estalecas);
+        participants = participants.sort((a, b) => Number(b.paredao) - Number(a.paredao));
 
         const lider = participants.filter((x) => x.lider);
         const vip = participants.filter((x) => x.grupo === 'VIP');
@@ -42,6 +49,26 @@ const run = async () => {
 
         res.render('index', { participants: participants, lider: lider, vip: vip, xepa: xepa });
     });
+
+    // app.get('/proxy', async (req, res) => {
+    //     const src = String(req.query.src)
+    //     const targetUrl = new URL(src);
+
+    //     if (targetUrl.host !== 's2.glbimg.com') {
+    //         res.status(400).send('invalid src');
+    //     }
+
+    //     axios({
+    //         method: 'get',
+    //         url: targetUrl.href,
+    //         responseType: 'arraybuffer'
+    //       })
+    //       .then((result) => {
+    //          res
+    //            .header("content-type", result.headers['content-type'])
+    //            .send(Buffer.from(result.data, 'binary'))
+    //       });
+    // });
 
     app.listen(config.port, () => {
         console.log(`Listening on port ${config.port}`);
