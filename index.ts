@@ -26,7 +26,7 @@ const run = async () => {
     app.use(express.static(path.join(__dirname, 'public')));
 
     const config = {
-        port: process.env.PORT ?? 8004
+        port: process.env.PORT ?? 8880
     };
 
     app.get('/', async (req, res) => {
