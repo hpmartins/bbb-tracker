@@ -60,7 +60,9 @@ block content
                 th VIPs 
                 th xepas
             tbody.text-center 
-                - var sorted_participants = participants.sort((a, b) => (b.estalecas - a.estalecas))
+                - var sorted_participants = all_participants.sort((a, b) => (b.estalecas - a.estalecas))
+                - sorted_participants = sorted_participants.filter((x) => !x.eliminado)
+                //- - sorted_participants = sorted_participants.sort((a, b) => (Number(a.eliminado) - Number(b.eliminado)))
                 each p in sorted_participants 
                     tr 
                         td.text-left

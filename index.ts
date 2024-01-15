@@ -37,17 +37,24 @@ const run = async () => {
     };
 
     app.get('/', async (req, res) => {
-        let participants = await getParticipants();
+        const all_participants = await getParticipants();
 
-        participants = participants.filter((x) => !x.eliminado);
+        let participants = all_participants.filter((x) => !x.eliminado);
         participants = participants.sort((a, b) => b.estalecas - a.estalecas);
         participants = participants.sort((a, b) => Number(b.paredao) - Number(a.paredao));
+        participants = participants.sort((a, b) => Number(b.eliminado) - Number(a.eliminado));
 
         const lider = participants.filter((x) => x.lider);
         const vip = participants.filter((x) => x.grupo === 'VIP');
         const xepa = participants.filter((x) => x.grupo === 'XEPA');
 
-        res.render('index', { participants: participants, lider: lider, vip: vip, xepa: xepa });
+        res.render('index', {
+            all_participants: all_participants,
+            participants: participants,
+            lider: lider,
+            vip: vip,
+            xepa: xepa
+        });
     });
 
     // app.get('/proxy', async (req, res) => {

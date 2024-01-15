@@ -42,7 +42,30 @@ export interface IParticipante {
     updatedAt: Date;
 }
 
-// Define the Mongoose schema for Participant
+export interface IVotos {
+    _id: number;
+    list: {
+        from: string;
+        to: string | null;
+        extra?: {
+            veto?: string;
+            group_vote?: boolean;
+            minerva?: boolean;
+            contragolpe?: string;
+            indicacao?: boolean;
+        };
+    }[];
+}
+
+const votosSchema = new mongoose.Schema({
+    _id: Number,
+    list: {
+        from: String,
+        to: String,
+        extra: Object
+    }
+});
+
 const participanteSchema = new mongoose.Schema(
     {
         _id: {
@@ -86,6 +109,7 @@ const participanteSchema = new mongoose.Schema(
 
 // Create the Mongoose model for Participant
 export const Participante = mongoose.model<IParticipante>('Participante', participanteSchema);
+export const Votos = mongoose.model<IVotos>('Votos', votosSchema);
 
 // Connect to the MongoDB database
 mongoose
