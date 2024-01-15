@@ -71,8 +71,6 @@ const run = async () => {
         const vip = participants.filter((x) => x.grupo === 'VIP');
         const xepa = participants.filter((x) => x.grupo === 'XEPA');
 
-        console.log(votos)
-
         res.render('index', {
             all_participants: all_participants,
             participants: participants,
