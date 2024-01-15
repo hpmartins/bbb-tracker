@@ -1,39 +1,49 @@
 import 'dotenv/config';
 import express from 'express';
-import { Eta } from 'eta';
 import path from 'path';
-import { Participante } from './db';
+import { IParticipante, Participante } from './db';
 
 const getParticipants = async () => {
-    const query = await Participante.aggregate()
-        .sort({ createdAt: -1 })
+    return await Participante.aggregate<IParticipante>()
         .group({
-            _id: '$nomeId',
+            _id: '$_id.nome',
             list: {
-                $push: "$$ROOT"
+                $push: '$$ROOT'
             }
         })
-    
-    console.log(query)
-}
+        .sort({ 'list._id.modified': -1 })
+        .append({
+            $replaceWith: { $arrayElemAt: ['$list', 0] }
+        })
+        .sort({ '_id.nome': 1 });
+};
 
 const run = async () => {
-    const app = express()
-    const eta = new Eta({ views: path.join(__dirname, "templates"), cache: true })
+    const app = express();
+
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'pug');
+    app.use(express.static(path.join(__dirname, 'public')));
 
     const config = {
-        port: process.env.PORT ?? 8004,
-    }
+        port: process.env.PORT ?? 8004
+    };
 
-    await getParticipants()
+    app.get('/', async (req, res) => {
+        let participants = await getParticipants();
 
-    app.get("/", (req, res) => {
-        res.status(200).send(eta.render("index", {}))
-    })
+        participants = participants.filter(x => !x.eliminado);
+
+        const lider = participants.filter((x) => x.lider);
+        const vip = participants.filter((x) => x.grupo === 'VIP');
+        const xepa = participants.filter((x) => x.grupo === 'XEPA');
+
+        res.render('index', { participants: participants, lider: lider, vip: vip, xepa: xepa });
+    });
 
     app.listen(config.port, () => {
-        console.log(`Listening on port ${config.port}`)
-    })
+        console.log(`Listening on port ${config.port}`);
+    });
 };
 
 run();

@@ -1,0 +1,93 @@
+extends layout.pug
+
+mixin estalecas(x)
+    if x >= 0
+        = `$${x}`
+    else
+        = `-$${-x}`
+
+mixin list_avatars(list)
+    each p in list
+        +avatar(p)
+
+mixin avatar(p)
+    .flex.flex-col.gap-y-2.p-2
+        .avatar.indicator
+            span.indicator-item.indicator-bottom.indicator-end.badge.badge-warning
+                +estalecas(p.estalecas)
+            if p.monstro
+                span.indicator-item.badge.badge-secondary M
+            if p.paredao
+                span.indicator-item.indicator-top.indicator-center.badge.badge-error paredão
+            if p.anjo
+                span.indicator-item.indicator-top.indicator-start.badge.badge-info A
+            if p.imune
+                span.indicator-item.indicator-bottom.indicator-start.badge.badge-accent I
+            .w-32.rounded-lg.ring.ring-primary
+                img(src=p.imagem alt=p.nomePopular)
+        .text-md.text-center= p.nomePopular
+
+block content
+    p.text-4xl.text-center.p-5 Big Brother Brasil 24
+
+    .max-w-3xl.space-y-6
+        div
+            p.text-2xl.text-center Líder
+            div.flex.flex-row.flex-wrap.gap-5.justify-center
+                +list_avatars(lider)
+
+        div
+            p.text-2xl.text-center VIP
+            div.flex.flex-row.flex-wrap.gap-5.justify-center
+                +list_avatars(vip)
+
+        div
+            p.text-2xl.text-center Xepa
+            div.flex.flex-row.flex-wrap.gap-5.justify-center
+                +list_avatars(xepa)
+
+    .overflow-x-auto
+        table.table.table-zebra.table-lg
+            thead.text-2xl
+                th participante 
+                th estalecas
+                th idade
+                th anjos
+                th imunidades 
+                th lideranças 
+                th monstros 
+                th paredões
+                th VIPs 
+                th xepas
+            tbody.text-center 
+                - var sorted_participants = participants.sort((a, b) => (b.estalecas - a.estalecas))
+                each p in sorted_participants 
+                    tr 
+                        td.text-left
+                            a(href=p.url)
+                                .flex.items-center.space-x-3
+                                    .avatar              
+                                        .w-16.rounded
+                                            img(src=p.imagem alt=p.nomePopular)
+                                    div 
+                                        p.text-xl.font-bold= p.nomePopular 
+                                        p
+                                            if p.lider 
+                                                .badge.badge-warning líder
+                                            if p.paredao 
+                                                .badge.badge-error paredão
+                                            if p.anjo 
+                                                .badge.badge-info anjo
+                                            if p.imune 
+                                                .badge.badge-access imune
+                                            if p.monstro 
+                                                .badge.badge-secondary monstro
+                        td= p.estalecas 
+                        td= p.idade
+                        td= p.xAnjo > 0 ? p.xAnjo : ''
+                        td= p.xImune > 0 ? p.xImune : ''
+                        td= p.xLider > 0 ? p.xLider : ''
+                        td= p.xMonstro > 0 ? p.xMonstro : ''
+                        td= p.xParedao > 0 ? p.xParedao : ''
+                        td= p.xVip > 0 ? p.xVip : ''
+                        td= p.xXepa > 0 ? p.xXepa : ''

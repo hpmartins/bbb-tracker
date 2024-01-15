@@ -7,7 +7,6 @@ export interface IParticipante {
         nome: string;
         modified: Date;
     };
-    nomeId: string;
     abandono: boolean;
     aniversario: string;
     anjo: boolean;
