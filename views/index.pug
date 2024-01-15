@@ -27,6 +27,25 @@ mixin avatar(p)
                 img(src=p.imagem loading="lazy" alt=p.nomePopular)
         .text-md.text-center= p.nomePopular
 
+mixin tableAvatar(p)
+    .flex.items-center.space-x-3
+        .avatar
+            .w-14.rounded
+                img(src=p.imagem loading="lazy" alt=p.nomePopular)
+        div 
+            p.text-lg.font-bold= p.nomePopular 
+            p
+                if p.lider 
+                    .badge.badge-warning líder
+                if p.paredao 
+                    .badge.badge-error paredão
+                if p.anjo 
+                    .badge.badge-info anjo
+                if p.imune 
+                    .badge.badge-access imune
+                if p.monstro 
+                    .badge.badge-secondary monstro
+
 block content
     p.text-4xl.text-center.p-5 Big Brother Brasil 24
 
@@ -46,12 +65,37 @@ block content
             div.flex.flex-row.flex-wrap.gap-5.justify-center
                 +list_avatars(xepa)
 
+    .overflow-x-auto 
+        table.table.table-zebra.table-xs 
+            thead.text-2xl
+                tr 
+                    th(rowspan=2) pessoa
+                    th(colspan=paredoes.length) paredão
+                tr 
+                    each paredao in paredoes 
+                        th= `#${paredao._id}`
+            tbody.text-2xl
+                each p of all_participants 
+                    tr
+                        td.text-left
+                            .flex.items-center.space-x-3
+                                .avatar
+                                    .w-8.rounded
+                                        img(src=p.imagem loading="lazy" alt=p.nomePopular)
+                                p.text-xl= p.nomePopular
+                        each paredao, idx in paredoes 
+                            - var currVotos = votos[idx]
+                            td.text-xl
+                                if (currVotos.indicacao == p._id.nome)
+                                    p.font-bold.text-error X
+                                else
+                                    p= (p._id.nome in currVotos.normais) ? currVotos.normais[p._id.nome] : ''
+
     .overflow-x-auto
         table.table.table-zebra.table-lg
             thead.text-2xl
                 th participante 
                 th estalecas
-                th idade
                 th anjos
                 th imunidades 
                 th lideranças 
@@ -59,7 +103,7 @@ block content
                 th paredões
                 th VIPs 
                 th xepas
-            tbody.text-center 
+            tbody.text-center
                 - var sorted_participants = all_participants.sort((a, b) => (b.estalecas - a.estalecas))
                 - sorted_participants = sorted_participants.filter((x) => !x.eliminado)
                 //- - sorted_participants = sorted_participants.sort((a, b) => (Number(a.eliminado) - Number(b.eliminado)))
@@ -67,25 +111,8 @@ block content
                     tr 
                         td.text-left
                             a(href=p.url)
-                                .flex.items-center.space-x-3
-                                    .avatar              
-                                        .w-14.rounded
-                                            img(src=p.imagem loading="lazy" alt=p.nomePopular)
-                                    div 
-                                        p.text-lg.font-bold= p.nomePopular 
-                                        p
-                                            if p.lider 
-                                                .badge.badge-warning líder
-                                            if p.paredao 
-                                                .badge.badge-error paredão
-                                            if p.anjo 
-                                                .badge.badge-info anjo
-                                            if p.imune 
-                                                .badge.badge-access imune
-                                            if p.monstro 
-                                                .badge.badge-secondary monstro
+                                +tableAvatar(p)
                         td= p.estalecas 
-                        td= p.idade
                         td= p.xAnjo > 0 ? p.xAnjo : ''
                         td= p.xImune > 0 ? p.xImune : ''
                         td= p.xLider > 0 ? p.xLider : ''

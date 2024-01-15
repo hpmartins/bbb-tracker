@@ -1,7 +1,15 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
-import { IParticipante, Participante } from './db';
+import { IParticipante, Paredao, Participante } from './db';
+
+const countUnique = (arr: any[]) => {
+    const counts: {[key: string]: any} = {};
+    for (var i = 0; i < arr.length; i++) {
+       counts[arr[i].to] = 1 + (counts[arr[i].to] || 0);
+    };
+    return counts;
+ };
 
 const getParticipants = async () => {
     return await Participante.aggregate<IParticipante>()
@@ -25,6 +33,20 @@ const getParticipants = async () => {
         .sort({ '_id.nome': 1 });
 };
 
+const getParedoes = async () => {
+    const paredoes = await Paredao.find()
+    const votos = paredoes.map((paredao) => {
+        const normais = paredao.votos.filter(x => !x.extra)
+        const indicacao = paredao.votos.filter(x => x.extra?.indicacao)[0].to
+        return {
+            _id: paredao._id,
+            normais: countUnique(normais),
+            indicacao: indicacao,
+        }
+    })
+    return { paredoes, votos }
+}
+
 const run = async () => {
     const app = express();
 
@@ -38,22 +60,27 @@ const run = async () => {
 
     app.get('/', async (req, res) => {
         const all_participants = await getParticipants();
-
-        let participants = all_participants.filter((x) => !x.eliminado);
-        participants = participants.sort((a, b) => b.estalecas - a.estalecas);
-        participants = participants.sort((a, b) => Number(b.paredao) - Number(a.paredao));
-        participants = participants.sort((a, b) => Number(b.eliminado) - Number(a.eliminado));
+        const participants = all_participants
+            .filter((x) => !x.eliminado)
+            .sort((a, b) => b.estalecas - a.estalecas)
+            .sort((a, b) => Number(b.paredao) - Number(a.paredao))
+            .sort((a, b) => Number(b.eliminado) - Number(a.eliminado));
+        const { paredoes, votos } = await getParedoes();
 
         const lider = participants.filter((x) => x.lider);
         const vip = participants.filter((x) => x.grupo === 'VIP');
         const xepa = participants.filter((x) => x.grupo === 'XEPA');
+
+        console.log(votos)
 
         res.render('index', {
             all_participants: all_participants,
             participants: participants,
             lider: lider,
             vip: vip,
-            xepa: xepa
+            xepa: xepa,
+            paredoes: paredoes,
+            votos: votos,
         });
     });
 
