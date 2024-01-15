@@ -24,7 +24,7 @@ mixin avatar(p)
             if p.imune
                 span.indicator-item.indicator-bottom.indicator-start.badge.badge-accent I
             .w-32.rounded-lg.ring.ring-primary
-                img(src=p.imagem alt=p.nomePopular)
+                img(src=p.imagem loading="lazy" alt=p.nomePopular)
         .text-md.text-center= p.nomePopular
 
 block content
@@ -68,7 +68,7 @@ block content
                                 .flex.items-center.space-x-3
                                     .avatar              
                                         .w-14.rounded
-                                            img(src=p.imagem alt=p.nomePopular)
+                                            img(src=p.imagem loading="lazy" alt=p.nomePopular)
                                     div 
                                         p.text-lg.font-bold= p.nomePopular 
                                         p
