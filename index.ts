@@ -41,18 +41,19 @@ const getParticipants = async () => {
         .sort({ '_id.nome': 1 });
 };
 
-const getParedoes = async () => {
+const getVotosPorParedao = async () => {
     const paredoes = await Paredao.find();
     const votos = paredoes.map((paredao) => {
         const normais = paredao.votos.filter((x) => !x.extra);
         const indicacao = paredao.votos.filter((x) => x.extra?.indicacao)[0].to;
         return {
             _id: paredao._id,
-            normais: countUnique(normais),
+            normais: normais,
+            normais_unique: countUnique(normais),
             indicacao: indicacao
         };
     });
-    return { paredoes, votos };
+    return { number: paredoes.length, votos: votos };
 };
 
 const getActivityDeltas = async () => {
@@ -125,6 +126,31 @@ const getActivityDeltas = async () => {
     return deltas.sort((a, b) => (dayjs(a.modified).isAfter(b.modified) ? -1 : 1));
 };
 
+const getVotos = async () => {
+    const votos = await Paredao.aggregate()
+        .unwind('$votos')
+        .project({
+            paredao: '$_id',
+            from: '$votos.from',
+            to: '$votos.to',
+            extra: '$votos.extra'
+        })
+        .sort({ paredao: 1 });
+
+    return votos;
+    // const votos = paredoes.map((paredao) => {
+    //     const normais = paredao.votos.filter((x) => !x.extra);
+    //     const indicacao = paredao.votos.filter((x) => x.extra?.indicacao)[0].to;
+    //     return {
+    //         _id: paredao._id,
+    //         normais: normais,
+    //         normais_unique: countUnique(normais),
+    //         indicacao: indicacao
+    //     };
+    // });
+    // return { number: paredoes.length, votos: votos };
+};
+
 const run = async () => {
     const app = express();
 
@@ -143,7 +169,9 @@ const run = async () => {
             .sort((a, b) => b.estalecas - a.estalecas)
             .sort((a, b) => Number(b.paredao) - Number(a.paredao))
             .sort((a, b) => Number(b.eliminado) - Number(a.eliminado));
-        const { paredoes, votos } = await getParedoes();
+
+        const paredoes = await getVotosPorParedao();
+        const votos = await getVotos();
 
         const lider = participants.filter((x) => x.lider);
         const vip = participants.filter((x) => !x.lider && x.grupo === 'VIP');
@@ -165,26 +193,6 @@ const run = async () => {
             }))
         });
     });
-
-    // app.get('/proxy', async (req, res) => {
-    //     const src = String(req.query.src)
-    //     const targetUrl = new URL(src);
-
-    //     if (targetUrl.host !== 's2.glbimg.com') {
-    //         res.status(400).send('invalid src');
-    //     }
-
-    //     axios({
-    //         method: 'get',
-    //         url: targetUrl.href,
-    //         responseType: 'arraybuffer'
-    //       })
-    //       .then((result) => {
-    //          res
-    //            .header("content-type", result.headers['content-type'])
-    //            .send(Buffer.from(result.data, 'binary'))
-    //       });
-    // });
 
     app.listen(config.port, () => {
         console.log(`Listening on port ${config.port}`);

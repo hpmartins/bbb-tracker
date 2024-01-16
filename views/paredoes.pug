@@ -3,10 +3,10 @@
         thead.text-xl.text-center
             tr 
                 th.text-left(rowspan=2) pessoa
-                th(colspan=paredoes.length) paredão
+                th(colspan=paredoes.number) paredão
             tr 
-                each paredao in paredoes 
-                    th= `#${paredao._id}`
+                each paredao in [...Array(paredoes.number).keys()] 
+                    th= `#${paredao+1}`
         tbody.text-xl.text-center
             each p of all_participants 
                 tr
@@ -16,10 +16,10 @@
                                 .w-8.rounded
                                     img(src=p.imagem loading="lazy" alt=p.nomePopular)
                             p.text-xl= p.nomePopular
-                    each paredao, idx in paredoes 
-                        - var currVotos = votos[idx]
+                    each paredao in [...Array(paredoes.number).keys()] 
+                        - var currVotos = paredoes.votos[paredao]
                         td.text-xl
                             if (currVotos.indicacao == p._id.nome)
                                 p.font-bold.text-error X
                             else
-                                p= (p._id.nome in currVotos.normais) ? currVotos.normais[p._id.nome] : ''
+                                p= (p._id.nome in currVotos.normais_unique) ? currVotos.normais_unique[p._id.nome] : ''

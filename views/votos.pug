@@ -1,0 +1,73 @@
+mixin tipo_de_voto(voto)
+    if voto.extra 
+        if voto.extra.indicacao
+            td.text-xl indicação 
+        else if voto.extra.minerva 
+            td.text-xl desempate
+        else if voto.extra.contragolpe 
+            td.text-xl contragolpe
+        else if voto.extra.veto 
+            td.text-xl veto
+        else if voto.extra.group_vote 
+            td.text-xl consenso em grupo
+    else 
+        td.text-xl normal
+
+
+.overflow-x-auto
+    table.table.table-zebra.table-xs 
+        thead.text-lg
+            tr
+                th
+                each p of all_participants
+                    th
+                        .avatar
+                            .w-8.rounded
+                                img(src=p.imagem loading="lazy" alt=p.nomePopular title=p.nomePopular)
+        tbody.text-center
+            each pFrom, iFrom in all_participants 
+                tr
+                    td.text-right
+                        .flex.items-center.justify-end.space-x-3
+                            p.text-lg= pFrom.nomePopular
+                            .avatar
+                                .w-8.rounded
+                                    img(src=pFrom.imagem loading="lazy" alt=pFrom.nomePopular)
+                    each pTo, iTo in all_participants
+                        - var nFrom = pFrom._id.nome 
+                        - var nTo = pTo._id.nome
+                        if pFrom._id.nome == pTo._id.nome 
+                            td.text-lg(style='background-color: #777777')
+                        else 
+                            - var votosFromTo = votos.filter(x => x.from == nFrom && x.to == nTo)
+                            - var modalId = `show_${iFrom}_${iTo}`
+                            td.text-lg
+                                if votosFromTo.length > 0
+                                    button(onclick=`${modalId}.showModal()`)= votosFromTo.length
+                                    dialog(id=modalId class="modal modal-bottom sm:modal-middle")
+                                        .modal-box.justify-center
+                                            p.text-xl
+                                            | Votos de 
+                                            span.font-bold= pFrom.nomePopular
+                                            |  em 
+                                            span.font-bold= pTo.nomePopular
+
+                                            .flex.justify-center.pt-5
+                                                .overflow-x-auto
+                                                    table.table.table-zebra.table-xs
+                                                        thead.text-center
+                                                            tr
+                                                                th.text-xl paredão 
+                                                                th.text-xl tipo de voto
+                                                        tbody.text-center
+                                                            for voto in votosFromTo
+                                                                tr
+                                                                    td.text-xl ##{voto.paredao}
+                                                                    +tipo_de_voto(voto)
+                                            .modal-action 
+                                                form(method="dialog")
+                                                    button.btn fechar
+                                        form.modal-backdrop(method="dialog")
+                                            button
+                                else
+                                    p
