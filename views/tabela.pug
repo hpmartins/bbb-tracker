@@ -1,0 +1,45 @@
+.overflow-x-auto
+    table.table.table-zebra.table-xs
+        thead.text-xl.text-center
+            th.text-left pessoa 
+            th estalecas
+            th anjos
+            th imunidades 
+            th lideranças 
+            th monstros 
+            th paredões
+            th VIPs 
+            th xepas
+        tbody.text-center
+            - var sorted_participants = all_participants.sort((a, b) => (b.estalecas - a.estalecas))
+            - sorted_participants = sorted_participants.filter((x) => !x.eliminado)
+            //- - sorted_participants = sorted_participants.sort((a, b) => (Number(a.eliminado) - Number(b.eliminado)))
+            each p in sorted_participants 
+                tr
+                    td
+                        a(href=p.url)
+                            .flex.items-center.space-x-3
+                                .avatar
+                                    .w-14.rounded
+                                        img(src=p.imagem loading="lazy" alt=p.nomePopular)
+                                .text-left
+                                    p.text-xl.font-bold= p.nomePopular 
+                                    p
+                                        if p.lider 
+                                            .badge.badge-warning líder
+                                        if p.paredao 
+                                            .badge.badge-error paredão
+                                        if p.anjo 
+                                            .badge.badge-info anjo
+                                        if p.imune 
+                                            .badge.badge-access imune
+                                        if p.monstro 
+                                            .badge.badge-secondary monstro
+                    td.text-xl= p.estalecas 
+                    td.text-xl= p.xAnjo > 0 ? p.xAnjo : ''
+                    td.text-xl= p.xImune > 0 ? p.xImune : ''
+                    td.text-xl= p.xLider > 0 ? p.xLider : ''
+                    td.text-xl= p.xMonstro > 0 ? p.xMonstro : ''
+                    td.text-xl= p.xParedao > 0 ? p.xParedao : ''
+                    td.text-xl= p.xVip > 0 ? p.xVip : ''
+                    td.text-xl= p.xXepa > 0 ? p.xXepa : ''

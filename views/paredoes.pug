@@ -1,0 +1,25 @@
+.overflow-x-auto
+    table.table.table-zebra.table-xs 
+        thead.text-2xl.text-center
+            tr 
+                th.text-left(rowspan=2) pessoa
+                th(colspan=paredoes.length) paredão
+            tr 
+                each paredao in paredoes 
+                    th= `#${paredao._id}`
+        tbody.text-2xl.text-center
+            each p of all_participants 
+                tr
+                    td.text-left
+                        .flex.items-center.space-x-3
+                            .avatar
+                                .w-8.rounded
+                                    img(src=p.imagem loading="lazy" alt=p.nomePopular)
+                            p.text-xl= p.nomePopular
+                    each paredao, idx in paredoes 
+                        - var currVotos = votos[idx]
+                        td.text-xl
+                            if (currVotos.indicacao == p._id.nome)
+                                p.font-bold.text-error X
+                            else
+                                p= (p._id.nome in currVotos.normais) ? currVotos.normais[p._id.nome] : ''

@@ -68,8 +68,8 @@ const run = async () => {
         const { paredoes, votos } = await getParedoes();
 
         const lider = participants.filter((x) => x.lider);
-        const vip = participants.filter((x) => x.grupo === 'VIP');
-        const xepa = participants.filter((x) => x.grupo === 'XEPA');
+        const vip = participants.filter((x) => !x.lider && x.grupo === 'VIP');
+        const xepa = participants.filter((x) => !x.lider && x.grupo === 'XEPA');
 
         res.render('index', {
             all_participants: all_participants,
