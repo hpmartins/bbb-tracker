@@ -1,3 +1,9 @@
+mixin delta(d)
+    if d > 0
+        p(style={'color': 'green'}) +#{d}
+    else
+        p(style={'color': 'red'}) #{d}
+
 .overflow-y-auto.overflow-x-auto.max-h-96
     table.table.table-zebra.table-xs
         thead.text-xl.text-center
@@ -14,4 +20,5 @@
                                     img(src=x.imagem loading="lazy" alt=x.nomePopular)
                             p.text-xl= x.nomePopular
                     td.text-xl= x.modified
-                    td.text-xl= x.delta
+                    td.text-xl
+                        +delta(x.delta)

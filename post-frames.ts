@@ -165,6 +165,7 @@ const run = async () => {
         password: process.env.BSKY_PWD ?? ''
     });
 
+    await postFrames();
     scheduleTasks();
 };
 
