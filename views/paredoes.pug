@@ -1,13 +1,13 @@
 .overflow-x-auto
     table.table.table-zebra.table-xs 
-        thead.text-2xl.text-center
+        thead.text-xl.text-center
             tr 
                 th.text-left(rowspan=2) pessoa
                 th(colspan=paredoes.length) paredão
             tr 
                 each paredao in paredoes 
                     th= `#${paredao._id}`
-        tbody.text-2xl.text-center
+        tbody.text-xl.text-center
             each p of all_participants 
                 tr
                     td.text-left

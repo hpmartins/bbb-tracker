@@ -1,0 +1,17 @@
+.overflow-y-auto.overflow-x-auto.max-h-96
+    table.table.table-zebra.table-xs
+        thead.text-xl.text-center
+            th.text-left pessoa 
+            th data
+            th estalecas 
+        tbody.text-xl.text-center
+            each x of activity 
+                tr 
+                    td.text-left
+                        .flex.items-center.space-x-3
+                            .avatar
+                                .w-8.rounded
+                                    img(src=x.imagem loading="lazy" alt=x.nomePopular)
+                            p.text-xl= x.nomePopular
+                    td.text-xl= x.modified
+                    td.text-xl= x.delta

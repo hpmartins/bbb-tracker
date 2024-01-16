@@ -8,26 +8,24 @@ mixin estalecas(x)
 
 mixin list_avatars(list)
     each p in list
-        +avatar(p)
-
-mixin avatar(p)
-    .flex.flex-col.gap-y-2.p-2
-        .avatar.indicator
-            span.indicator-item.indicator-bottom.indicator-end.badge.badge-warning
-                +estalecas(p.estalecas)
-            if p.monstro
-                span.indicator-item.badge.badge-secondary M
-            if p.paredao
-                span.indicator-item.indicator-top.indicator-center.badge.badge-error paredão
-            if p.anjo
-                span.indicator-item.indicator-top.indicator-start.badge.badge-info A
-            if p.imune
-                span.indicator-item.indicator-bottom.indicator-start.badge.badge-accent I
-            .w-32.rounded-lg.ring.ring-primary
-                img(src=p.imagem loading="lazy" alt=p.nomePopular)
-        .text-md.text-center= p.nomePopular
+        .flex.flex-col.gap-y-2.p-2
+            .avatar.indicator
+                span.indicator-item.indicator-bottom.indicator-end.badge.badge-warning
+                    +estalecas(p.estalecas)
+                if p.monstro
+                    span.indicator-item.badge.badge-secondary M
+                if p.paredao
+                    span.indicator-item.indicator-top.indicator-center.badge.badge-error paredão
+                if p.anjo
+                    span.indicator-item.indicator-top.indicator-start.badge.badge-info A
+                if p.imune
+                    span.indicator-item.indicator-bottom.indicator-start.badge.badge-accent I
+                .w-32.rounded-lg.ring.ring-primary
+                    img(src=p.imagem loading="lazy" alt=p.nomePopular)
+            .text-md.text-center= p.nomePopular
 
 block content
+    .divider.divider-primary
     .w-full
         div
             p.text-2xl.text-center Líder
@@ -45,13 +43,16 @@ block content
                 +list_avatars(xepa)
 
     .divider.divider-primary
+    .w-fit
+        p.text-3xl.text-center.pb-4 Atividade recente
+        include atividade.pug
 
+    .divider.divider-primary
     .w-fit
         p.text-3xl.text-center.pb-4 Paredões e votos
         include paredoes.pug
-    
+
     .divider.divider-primary
-    
     .w-full
         p.text-3xl.text-center.pb-4 Estalecas e número de objetivos
         include tabela.pug
