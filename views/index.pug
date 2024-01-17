@@ -8,9 +8,9 @@ mixin estalecas(x)
 
 mixin list_avatars(list)
     each p in list
-        .flex.flex-col.gap-y-2.p-2
+        .flex.flex-col.gap-y-2.p-2.items-center
             .avatar.indicator
-                span.indicator-item.indicator-bottom.indicator-end.badge.badge-warning
+                span.indicator-item.indicator-bottom.indicator-center.badge.badge-warning
                     +estalecas(p.estalecas)
                 if p.monstro
                     span.indicator-item.badge.badge-secondary M
@@ -20,9 +20,9 @@ mixin list_avatars(list)
                     span.indicator-item.indicator-top.indicator-start.badge.badge-info A
                 if p.imune
                     span.indicator-item.indicator-bottom.indicator-start.badge.badge-accent I
-                .w-32.rounded-lg.ring.ring-primary
+                .w-28.rounded-lg.ring.ring-primary
                     img(src=p.imagem loading="lazy" alt=p.nomePopular)
-            .text-md.text-center= p.nomePopular
+            .text-md.font-bold.text-center= p.nomePopular
 
 block content
     .divider.divider-primary
