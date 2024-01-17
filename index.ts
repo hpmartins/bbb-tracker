@@ -6,6 +6,7 @@ import { IParticipante, Paredao, Participante } from './db';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import { PAREDOES } from './defaults';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -53,21 +54,10 @@ const getVotosPorParedao = async () => {
             indicacao: indicacao
         };
     });
-    return { number: paredoes.length, votos: votos };
+    return { lista: paredoes, votos };
 };
 
 const getActivityDeltas = async () => {
-    // const activity = await Participante.aggregate()
-    //     .project({
-    //         nome: '$_id.nome',
-    //         modified: '$_id.modified',
-    //         estalecas: 1
-    //     })
-    //     .project({
-    //         _id: 0
-    //     })
-    //     .sort({ modified: -1 });
-
     const grouped: {
         _id: string;
         list: { _id: Date; nomePopular: string; imagem: string; estalecas: number }[];
@@ -161,6 +151,10 @@ const run = async () => {
     const config = {
         port: process.env.PORT ?? 8880
     };
+
+    for (const paredao of PAREDOES) {
+        await Paredao.findOneAndReplace({ _id: paredao._id }, paredao, { upsert: true });
+    }
 
     app.get('/', async (req, res) => {
         const all_participants = await getParticipants();

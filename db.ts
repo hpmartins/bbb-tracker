@@ -44,6 +44,12 @@ export interface IParticipante {
 
 export interface IParedao {
     _id: number;
+    resultado: string[];
+    anjo?: {
+        from: string;
+        to: string;
+        autoimune: boolean;
+    }[];
     votos: {
         from: string;
         to: string | null;
@@ -59,11 +65,21 @@ export interface IParedao {
 
 const paredaoSchema = new mongoose.Schema({
     _id: Number,
-    votos: [{
-        from: String,
-        to: String,
-        extra: Object
-    }]
+    resultado: [String],
+    anjo: [
+        {
+            from: String,
+            to: String,
+            autoimune: Boolean
+        }
+    ],
+    votos: [
+        {
+            from: String,
+            to: String,
+            extra: Object
+        }
+    ]
 });
 
 const participanteSchema = new mongoose.Schema(

@@ -30,6 +30,7 @@ export const PARTICIPANTES_BBB = [
 export const PAREDOES = [
     {
         _id: 1,
+        resultado: ['yasmin', 'giovanna', 'maycon'],
         votos: [
             {
                 from: 'alane',
@@ -140,6 +141,14 @@ export const PAREDOES = [
     },
     {
         _id: 2,
+        resultado: ['davi', 'juninho', 'thalyta'],
+        anjo: [
+            {
+                from: 'matteus',
+                to: 'lucas-pizane',
+                autoimune: true
+            }
+        ],
         votos: [
             {
                 from: 'alane',
@@ -175,7 +184,7 @@ export const PAREDOES = [
             },
             {
                 from: 'juninho',
-                to: 'deniziane',
+                to: 'deniziane'
             },
             {
                 from: 'juninho',
@@ -256,6 +265,7 @@ export const PAREDOES = [
     },
     {
         _id: 3,
+        resultado: ['beatriz', 'davi', 'lucas-pizane'],
         votos: [
             {
                 from: 'alane',
@@ -263,15 +273,15 @@ export const PAREDOES = [
             },
             {
                 from: 'beatriz',
-                to: 'lucas-pizane',
+                to: 'lucas-pizane'
             },
             {
                 from: 'davi',
-                to: 'nizam',
+                to: 'nizam'
             },
             {
                 from: 'deniziane',
-                to: 'raquele',
+                to: 'raquele'
             },
             {
                 from: 'fernanda',
@@ -279,7 +289,7 @@ export const PAREDOES = [
             },
             {
                 from: 'giovanna',
-                to: 'juninho',
+                to: 'juninho'
             },
             {
                 from: 'giovanna-pitel',
@@ -292,7 +302,7 @@ export const PAREDOES = [
             {
                 from: 'juninho',
                 to: 'davi',
-                extra: { group_vote: true },
+                extra: { group_vote: true }
             },
             {
                 from: 'leidy-elin',
@@ -311,7 +321,7 @@ export const PAREDOES = [
             {
                 from: 'lucas-luigi',
                 to: 'davi',
-                extra: { group_vote: true },
+                extra: { group_vote: true }
             },
             {
                 from: 'lucas-pizane',
@@ -324,7 +334,7 @@ export const PAREDOES = [
             {
                 from: 'matteus',
                 to: 'davi',
-                extra: { group_vote: true },
+                extra: { group_vote: true }
             },
             {
                 from: 'mc-bin-laden',
@@ -337,17 +347,17 @@ export const PAREDOES = [
             {
                 from: 'nizam',
                 to: 'davi',
-                extra: { group_vote: true },
+                extra: { group_vote: true }
             },
             {
                 from: 'raquele',
                 to: 'davi',
-                extra: { group_vote: true },
+                extra: { group_vote: true }
             },
             {
                 from: 'rodriguinho',
                 to: 'davi',
-                extra: { group_vote: true },
+                extra: { group_vote: true }
             },
             {
                 from: 'vanessa-lopes',
@@ -355,7 +365,7 @@ export const PAREDOES = [
             },
             {
                 from: 'vinicius-rodrigues',
-                to: 'michel',
+                to: 'michel'
             },
             {
                 from: 'wanessa-camargo',
@@ -363,38 +373,38 @@ export const PAREDOES = [
             },
             {
                 from: 'yasmin-brunet',
-                to: 'marcus-vinicius',
-            },      
+                to: 'marcus-vinicius'
+            },
             {
                 from: 'beatriz',
                 to: 'rodriguinho',
-                extra: { veto: true },
+                extra: { veto: true }
             },
             {
                 from: 'davi',
                 to: 'matteus',
-                extra: { veto: true },
+                extra: { veto: true }
             },
             {
                 from: 'deniziane',
                 to: 'juninho',
-                extra: { veto: true },
+                extra: { veto: true }
             },
             {
                 from: 'giovanna',
                 to: 'nizam',
-                extra: { veto: true },
+                extra: { veto: true }
             },
             {
                 from: 'yasmin-brunet',
                 to: 'lucas-luigi',
-                extra: { veto: true },
-            }, 
+                extra: { veto: true }
+            },
             {
                 from: 'vinicius-rodrigues',
                 to: 'raquele',
-                extra: { veto: true },
-            },
+                extra: { veto: true }
+            }
         ]
     }
 ];
