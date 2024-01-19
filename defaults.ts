@@ -406,5 +406,119 @@ export const PAREDOES = [
                 extra: { veto: true }
             }
         ]
-    }
+    },
+    {
+        _id: 4,
+        resultado: [],
+        anjo: [
+            {
+                from: 'lucas-luigi',
+                to: '',
+                autoimune: true,
+            },
+            {
+                from: 'lucas-henrique',
+                to: '',
+                autoimune: true,
+            },
+        ],
+        votos: [
+            {
+                from: 'alane',
+                to: '',
+            },
+            {
+                from: 'beatriz',
+                to: '',
+            },
+            {
+                from: 'davi',
+                to: '',
+            },
+            {
+                from: 'deniziane',
+                to: '',
+            },
+            {
+                from: 'fernanda',
+                to: '',
+            },
+            {
+                from: 'giovanna',
+                to: '',
+            },
+            {
+                from: 'giovanna-pitel',
+                to: '',
+            },
+            {
+                from: 'isabelle',
+                to: '',
+            },
+            {
+                from: 'juninho',
+                to: '',
+            },
+            {
+                from: 'leidy-elin',
+                to: '',
+            },
+            {
+                from: 'lucas-henrique',
+                to: '',
+            },
+            {
+                from: 'lucas-luigi',
+                to: '',
+            },
+            {
+                from: 'lucas-pizane',
+                to: ''
+            },
+            {
+                from: 'marcus-vinicius',
+                to: ''
+            },
+            {
+                from: 'matteus',
+                to: '',
+            },
+            {
+                from: 'mc-bin-laden',
+                to: '',
+            },
+            {
+                from: 'michel',
+                to: '',
+            },
+            {
+                from: 'nizam',
+                to: '',
+            },
+            {
+                from: 'raquele',
+                to: '',
+            },
+            {
+                from: 'rodriguinho',
+                to: '',
+            },
+            {
+                from: 'vanessa-lopes',
+                to: ''
+            },
+            {
+                from: 'vinicius-rodrigues',
+                to: '',
+            },
+            {
+                from: 'wanessa-camargo',
+                to: '',
+            },
+            {
+                from: 'yasmin-brunet',
+                to: '',
+            },
+        ]
+    },
 ];
