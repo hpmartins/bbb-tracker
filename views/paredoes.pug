@@ -29,58 +29,58 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                         - break
                                     - var anjoTo = all_participants.filter(x => x._id.nome == votoAnjo.to)[0]
                                     .avatar
-                                        .w-8.rounded-full.ring.ring-info
+                                        .w-8.rounded.ring.ring-info
                                             img(src=anjoTo.imagem loading="lazy" alt=anjoTo.nomePopular title=anjoTo.nomePopular)
                                 each voto of votosFrom
                                     if !voto.to.length
                                         - break
                                     - var pTo = all_participants.filter(x => x._id.nome == voto.to)[0]
                                     - var nTo = pTo._id.nome
-                                    .avatar 
+                                    .avatar
                                         if voto.extra
                                             if voto.extra.indicacao
-                                                .w-8.rounded-full.ring.ring-error 
+                                                .w-8.rounded.ring.ring-error 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.veto
-                                                .w-8.rounded-full.ring.ring-warning 
+                                                .w-8.rounded.ring.ring-warning 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.minerva
-                                                .w-8.rounded-full.ring.ring-success 
+                                                .w-8.rounded.ring.ring-success 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.contragolpe
-                                                .w-8.rounded-full.ring.ring-accent 
+                                                .w-8.rounded.ring.ring-accent 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.group_vote
-                                                .w-8.rounded-full.ring.ring-primary 
+                                                .w-8.rounded.ring.ring-primary 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                         else
                                             if paredao.resultado.includes(nTo)
-                                                .w-8.rounded-full.ring.ring-error 
+                                                .w-8.rounded.ring.ring-error 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                             else
-                                                .w-8.rounded-full
+                                                .w-8.rounded
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
     
     .grid.grid-cols-2.flex.justify-center.py-4.gap-4
         .flex.items-center
             .avatar
-                .w-8.rounded-full.ring.ring-error 
+                .w-8.rounded.ring.ring-error 
             p.pl-2 indicação (votos/líder)
         .flex.items-center
             .avatar
-                .w-8.rounded-full.ring.ring-info
+                .w-8.rounded.ring.ring-info
             p.pl-2 imunidade
         .flex.items-center
             .avatar
-                .w-8.rounded-full.ring.ring-success
+                .w-8.rounded.ring.ring-success
             p.pl-2 desempate
         .flex.items-center
             .avatar
-                .w-8.rounded-full.ring.ring-accent
+                .w-8.rounded.ring.ring-accent
             p.pl-2 contragolpe
         .flex.items-center
             .avatar
-                .w-8.rounded-full.ring.ring-primary
+                .w-8.rounded.ring.ring-primary
             p.pl-2 em grupo
 
 .divider.divider-primary
