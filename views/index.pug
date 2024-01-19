@@ -2,16 +2,17 @@ extends layout.pug
 
 mixin estalecas(x)
     if x >= 0
-        = `$${x}`
+        span.indicator-item.indicator-bottom.indicator-center.badge.badge-warning
+            = `$${x}`
     else
-        = `-$${-x}`
+        span.indicator-item.indicator-bottom.indicator-center.badge.badge-error
+            = `-$${-x}`
 
 mixin list_avatars(list)
     each p in list
         .flex.flex-col.gap-y-2.p-2.items-center
             .avatar.indicator
-                span.indicator-item.indicator-bottom.indicator-center.badge.badge-warning
-                    +estalecas(p.estalecas)
+                +estalecas(p.estalecas)
                 if p.monstro
                     span.indicator-item.badge.badge-secondary M
                 if p.paredao
