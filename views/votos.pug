@@ -15,10 +15,10 @@ mixin tipo_de_voto(voto)
 
 
 .overflow-x-auto
-    table.table.table-zebra.table-xs 
+    table.table.table-zebra.table-xs.table-border
         thead.text-lg
-            tr
-                th
+            tr(style='border:none;')
+                th(style='border:none;')
                 each p of all_participants
                     th
                         .avatar

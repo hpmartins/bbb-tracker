@@ -1,0 +1,7 @@
+.table-border td, .table-border th, .table-border tr {
+    border: 2px solid #DDDDDD;
+}
+
+.table-border-none {
+    border: none;
+}

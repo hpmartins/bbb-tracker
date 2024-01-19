@@ -3,7 +3,7 @@
 p.text-3xl.text-center.pb-4 Votos dados em paredões
 .w-fit
     .overflow-x-auto
-        table.table.table-zebra.table-xs 
+        table.table.table-zebra.table-xs.table-border
             thead.text-xl.text-center
                 tr 
                     th.text-left(rowspan=2) pessoa
@@ -23,7 +23,7 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                 p.text-xl= pFrom.nomePopular
                         each paredao of paredoes.lista 
                             - var votosFrom = votos.filter(x => x.paredao == paredao._id && x.from == nFrom)
-                            td
+                            td.space-x-2
                                 each votoAnjo of paredao.anjo.filter(x => x.from == nFrom)
                                     if !votoAnjo.to.length
                                         - break
@@ -88,7 +88,7 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
 p.text-3xl.text-center.pb-4 Votos recebidos em paredões
 .w-fit
     .overflow-x-auto
-        table.table.table-zebra.table-xs 
+        table.table.table-zebra.table-xs.table-border
             thead.text-xl.text-center
                 tr 
                     th.text-left(rowspan=2) pessoa
@@ -110,7 +110,7 @@ p.text-3xl.text-center.pb-4 Votos recebidos em paredões
                             - var votosTo = votos.filter(x => x.paredao == paredao._id && x.to == nTo)
                             - var votosNormais = votosTo.filter(x => !x.extra)
                             - var votosEspeciais = votosTo.filter(x => x.extra)
-                            td.text-xl.text-center
+                            td.text-xl.text-center.space-x-2
                                 if paredao.anjo.filter(x => x.from == nTo && x.autoimune).length
                                     .badge.badge-info I
                                 if paredao.anjo.filter(x => x.to == nTo).length
