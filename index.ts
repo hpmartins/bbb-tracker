@@ -46,7 +46,7 @@ const getVotosPorParedao = async () => {
     const paredoes = await Paredao.find();
     const votos = paredoes.map((paredao) => {
         const normais = paredao.votos.filter((x) => !x.extra);
-        const indicacao = paredao.votos.filter((x) => x.extra?.indicacao)[0].to;
+        const indicacao = paredao.votos.filter((x) => x.extra?.indicacao)[0]?.to ?? undefined;
         return {
             _id: paredao._id,
             normais: normais,

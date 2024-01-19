@@ -25,11 +25,15 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                             - var votosFrom = votos.filter(x => x.paredao == paredao._id && x.from == nFrom)
                             td
                                 each votoAnjo of paredao.anjo.filter(x => x.from == nFrom)
+                                    if !votoAnjo.to.length
+                                        - break
                                     - var anjoTo = all_participants.filter(x => x._id.nome == votoAnjo.to)[0]
                                     .avatar
                                         .w-8.rounded-full.ring.ring-info
                                             img(src=anjoTo.imagem loading="lazy" alt=anjoTo.nomePopular title=anjoTo.nomePopular)
                                 each voto of votosFrom
+                                    if !voto.to.length
+                                        - break
                                     - var pTo = all_participants.filter(x => x._id.nome == voto.to)[0]
                                     - var nTo = pTo._id.nome
                                     .avatar 
