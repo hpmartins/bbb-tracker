@@ -10,7 +10,7 @@ mixin estalecas(x)
 
 mixin list_avatars(list)
     each p in list
-        .flex.flex-col.gap-y-2.p-2.items-center
+        a(href=p.url target="_blank"): .flex.flex-col.gap-y-2.p-2.items-center
             .avatar.indicator
                 +estalecas(p.estalecas)
                 if p.monstro
@@ -28,18 +28,18 @@ mixin list_avatars(list)
 block content
     .divider.divider-primary
     .w-full
-        div
-            p.text-2xl.text-center Líder
+        div.py-2
+            p.text-2xl.text-center.py-2 Líder
             div.flex.flex-row.flex-wrap.gap-5.justify-center
                 +list_avatars(lider)
 
-        div
-            p.text-2xl.text-center VIP
+        div.py-2
+            p.text-2xl.text-center.py-2 VIP
             div.flex.flex-row.flex-wrap.gap-5.justify-center
                 +list_avatars(vip)
 
-        div
-            p.text-2xl.text-center Xepa
+        div.py-2
+            p.text-2xl.text-center.py-2 Xepa
             div.flex.flex-row.flex-wrap.gap-5.justify-center
                 +list_avatars(xepa)
 

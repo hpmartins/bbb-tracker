@@ -17,10 +17,10 @@
             each p in sorted_participants 
                 tr
                     td
-                        a(href=p.url)
+                        a(href=p.url target="_blank")
                             .flex.items-center.space-x-3
                                 .avatar
-                                    .w-14.rounded
+                                    .w-10.rounded
                                         img(src=p.imagem loading="lazy" alt=p.nomePopular)
                                 .text-left
                                     p.text-xl.font-bold= p.nomePopular 
@@ -32,7 +32,7 @@
                                         if p.anjo 
                                             .badge.badge-info anjo
                                         if p.imune 
-                                            .badge.badge-access imune
+                                            .badge.badge-info imune
                                         if p.monstro 
                                             .badge.badge-secondary monstro
                     td.text-xl= p.estalecas 
