@@ -1,77 +1,160 @@
-.overflow-x-auto
-    table.table.table-zebra.table-xs 
-        thead.text-xl.text-center
-            tr 
-                th.text-left(rowspan=2) pessoa
-                th(colspan=paredoes.lista.length) paredão
-            tr 
-                each paredao in [...Array(paredoes.lista.length).keys()] 
-                    th= `#${paredao+1}`
-        tbody.text-xl.text-center
-            each pTo of all_participants 
-                - var nTo = pTo._id.nome
-                tr
-                    td.text-left
-                        .flex.items-center.space-x-3
-                            .avatar
-                                .w-8.rounded
-                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular)
-                            p.text-xl= pTo.nomePopular
-                    each paredao of paredoes.lista
-                        - var votosTo = votos.filter(x => x.paredao == paredao._id && x.to == nTo)
-                        - var votosNormais = votosTo.filter(x => !x.extra)
-                        - var votosEspeciais = votosTo.filter(x => x.extra)
-                        td.text-xl.text-center
-                            if paredao.anjo.filter(x => x.from == nTo).length
-                                .badge.badge-info A
-                            if paredao.anjo.filter(x => x.from == nTo && x.autoimune).length
-                                .badge.badge-info.badge-outline I
-                            if paredao.anjo.filter(x => x.to == nTo).length
-                                .badge.badge-info.badge-outline I
-                            if votosNormais.length > 0
-                                if paredao.resultado.includes(nTo)
-                                    .badge.badge-error= votosNormais.length
-                                else
-                                    .badge.badge-neutral= votosNormais.length
-                            if votosEspeciais.length > 0
-                                - var votosIndicacao = votosEspeciais.filter(x => x.extra.indicacao)
-                                - var votosVetos = votosEspeciais.filter(x => x.extra.veto)
-                                - var votosMinerva = votosEspeciais.filter(x => x.extra.minerva)
-                                - var votosContragolpe = votosEspeciais.filter(x => x.extra.contragolpe)
-                                - var votosGroupVote = votosEspeciais.filter(x => x.extra.group_vote)
-                                if votosIndicacao.length > 0
-                                    .badge.badge-error L
-                                if votosVetos.length > 0
-                                    .badge.badge-warning V
-                                if votosMinerva.length > 0
-                                    .badge.badge-error.badge-outline M
-                                if votosContragolpe.length > 0
-                                    .badge.badge-error.badge-outline C
-                                if votosGroupVote.length > 0
-                                    .badge.badge-error.badge-outline G
+.divider.divider-primary
 
-.grid.grid-cols-2.flex.justify-center.py-4
-    .flex.items-center
-        .badge.badge-neutral N 
-        p.pl-2 normais
-    .flex.items-center
-        .badge.badge-error X/L
-        p.pl-2 indicação (votos/líder)
-    .flex.items-center
-        .badge.badge-info A
-        p.pl-2 anjo
-    .flex.items-center
-        .badge.badge-info.badge-outline I
-        p.pl-2 imune
-    .flex.items-center
-        .badge.badge-warning V
-        p.pl-2 veto
-    .flex.items-center
-        .badge.badge-error.badge-outline M
-        p.pl-2 desempate
-    .flex.items-center
-        .badge.badge-error.badge-outline C
-        p.pl-2 contragolpe
-    .flex.items-center
-        .badge.badge-error.badge-outline G
-        p.pl-2 em grupo
+p.text-3xl.text-center.pb-4 Votos dados em paredões
+.w-fit
+    .overflow-x-auto
+        table.table.table-zebra.table-xs 
+            thead.text-xl.text-center
+                tr 
+                    th.text-left(rowspan=2) pessoa
+                    th(colspan=paredoes.lista.length) paredão
+                tr 
+                    each paredao in [...Array(paredoes.lista.length).keys()] 
+                        th= `#${paredao+1}`
+            tbody.text-xl.text-center
+                each pFrom of all_participants 
+                    - var nFrom = pFrom._id.nome 
+                    tr 
+                        td.text-left
+                            .flex.items-center.space-x-3
+                                .avatar
+                                    .w-8.rounded
+                                        img(src=pFrom.imagem loading="lazy" alt=pFrom.nomePopular)
+                                p.text-xl= pFrom.nomePopular
+                        each paredao of paredoes.lista 
+                            - var votosFrom = votos.filter(x => x.paredao == paredao._id && x.from == nFrom)
+                            td
+                                each votoAnjo of paredao.anjo.filter(x => x.from == nFrom)
+                                    - var anjoTo = all_participants.filter(x => x._id.nome == votoAnjo.to)[0]
+                                    .avatar
+                                        .w-8.rounded-full.ring.ring-info
+                                            img(src=anjoTo.imagem loading="lazy" alt=anjoTo.nomePopular title=anjoTo.nomePopular)
+                                each voto of votosFrom
+                                    - var pTo = all_participants.filter(x => x._id.nome == voto.to)[0]
+                                    - var nTo = pTo._id.nome
+                                    .avatar 
+                                        if voto.extra
+                                            if voto.extra.indicacao
+                                                .w-8.rounded-full.ring.ring-error 
+                                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+                                            if voto.extra.veto
+                                                .w-8.rounded-full.ring.ring-warning 
+                                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+                                            if voto.extra.minerva
+                                                .w-8.rounded-full.ring.ring-success 
+                                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+                                            if voto.extra.contragolpe
+                                                .w-8.rounded-full.ring.ring-accent 
+                                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+                                            if voto.extra.group_vote
+                                                .w-8.rounded-full.ring.ring-primary 
+                                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+                                        else
+                                            if paredao.resultado.includes(nTo)
+                                                .w-8.rounded-full.ring.ring-error 
+                                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+                                            else
+                                                .w-8.rounded-full
+                                                    img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+    
+    .grid.grid-cols-2.flex.justify-center.py-4.gap-4
+        .flex.items-center
+            .avatar
+                .w-8.rounded-full.ring.ring-error 
+            p.pl-2 indicação (votos/líder)
+        .flex.items-center
+            .avatar
+                .w-8.rounded-full.ring.ring-info
+            p.pl-2 imunidade
+        .flex.items-center
+            .avatar
+                .w-8.rounded-full.ring.ring-success
+            p.pl-2 desempate
+        .flex.items-center
+            .avatar
+                .w-8.rounded-full.ring.ring-accent
+            p.pl-2 contragolpe
+        .flex.items-center
+            .avatar
+                .w-8.rounded-full.ring.ring-primary
+            p.pl-2 em grupo
+
+.divider.divider-primary
+
+p.text-3xl.text-center.pb-4 Votos recebidos em paredões
+.w-fit
+    .overflow-x-auto
+        table.table.table-zebra.table-xs 
+            thead.text-xl.text-center
+                tr 
+                    th.text-left(rowspan=2) pessoa
+                    th(colspan=paredoes.lista.length) paredão
+                tr 
+                    each paredao in [...Array(paredoes.lista.length).keys()] 
+                        th= `#${paredao+1}`
+            tbody.text-xl.text-center
+                each pTo of all_participants 
+                    - var nTo = pTo._id.nome
+                    tr
+                        td.text-left
+                            .flex.items-center.space-x-3
+                                .avatar
+                                    .w-8.rounded
+                                        img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
+                                p.text-xl= pTo.nomePopular
+                        each paredao of paredoes.lista
+                            - var votosTo = votos.filter(x => x.paredao == paredao._id && x.to == nTo)
+                            - var votosNormais = votosTo.filter(x => !x.extra)
+                            - var votosEspeciais = votosTo.filter(x => x.extra)
+                            td.text-xl.text-center
+                                if paredao.anjo.filter(x => x.from == nTo && x.autoimune).length
+                                    .badge.badge-info I
+                                if paredao.anjo.filter(x => x.to == nTo).length
+                                    .badge.badge-info.badge-outline I
+                                if votosNormais.length > 0
+                                    if paredao.resultado.includes(nTo)
+                                        .badge.badge-error= votosNormais.length
+                                    else
+                                        .badge.badge-neutral= votosNormais.length
+                                if votosEspeciais.length > 0
+                                    - var votosIndicacao = votosEspeciais.filter(x => x.extra.indicacao)
+                                    - var votosVetos = votosEspeciais.filter(x => x.extra.veto)
+                                    - var votosMinerva = votosEspeciais.filter(x => x.extra.minerva)
+                                    - var votosContragolpe = votosEspeciais.filter(x => x.extra.contragolpe)
+                                    - var votosGroupVote = votosEspeciais.filter(x => x.extra.group_vote)
+                                    if votosIndicacao.length > 0
+                                        .badge.badge-error L
+                                    if votosVetos.length > 0
+                                        .badge.badge-warning V
+                                    if votosMinerva.length > 0
+                                        .badge.badge-error.badge-outline M
+                                    if votosContragolpe.length > 0
+                                        .badge.badge-accent.badge-outline C
+                                    if votosGroupVote.length > 0
+                                        .badge.badge-primary.badge-outline G
+
+    .grid.grid-cols-2.flex.justify-center.py-4
+        .flex.items-center
+            .badge.badge-neutral N 
+            p.pl-2 normais
+        .flex.items-center
+            .badge.badge-error X/L
+            p.pl-2 indicação (votos/líder)
+        .flex.items-center
+            .badge.badge-info I
+            p.pl-2 autoimune
+        .flex.items-center
+            .badge.badge-info.badge-outline I
+            p.pl-2 imune
+        .flex.items-center
+            .badge.badge-warning V
+            p.pl-2 veto
+        .flex.items-center
+            .badge.badge-success.badge-outline M
+            p.pl-2 desempate
+        .flex.items-center
+            .badge.badge-accent.badge-outline C
+            p.pl-2 contragolpe
+        .flex.items-center
+            .badge.badge-primary.badge-outline G
+            p.pl-2 em grupo
