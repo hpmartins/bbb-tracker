@@ -29,7 +29,10 @@ mixin tipo_de_voto(voto)
                 tr
                     td.text-right
                         .flex.items-center.justify-end.space-x-3
-                            p.text-lg= pFrom.nomePopular
+                            if pFrom.eliminado
+                                p.text-lg.line-through= pFrom.nomePopular
+                            else 
+                                p.text-lg= pFrom.nomePopular
                             .avatar
                                 .w-8.rounded
                                     img(src=pFrom.imagem loading="lazy" alt=pFrom.nomePopular)

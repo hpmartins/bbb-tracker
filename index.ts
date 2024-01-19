@@ -174,8 +174,6 @@ const run = async () => {
         }
         votos_count = [...new Set(votos_count.sort((a, b) => a - b))];
 
-        console.log(votos_count)
-
         const votos_cores = Object.fromEntries(
             votos_count.map((x) => {
                 let bg_color = chroma

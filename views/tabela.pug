@@ -1,6 +1,6 @@
 .overflow-x-auto
     table.table.table-zebra.table-xs
-        thead.text-xl.text-center
+        thead.text-lg.text-center
             th.text-left pessoa 
             th estalecas
             th anjos
@@ -12,8 +12,8 @@
             th xepas
         tbody.text-center
             - var sorted_participants = all_participants.sort((a, b) => (b.estalecas - a.estalecas))
-            - sorted_participants = sorted_participants.filter((x) => !x.eliminado)
-            //- - sorted_participants = sorted_participants.sort((a, b) => (Number(a.eliminado) - Number(b.eliminado)))
+            //- - sorted_participants = sorted_participants.filter((x) => !x.eliminado)
+            - sorted_participants = sorted_participants.sort((a, b) => (Number(a.eliminado) - Number(b.eliminado)))
             each p in sorted_participants 
                 tr
                     td
@@ -23,7 +23,10 @@
                                     .w-10.rounded
                                         img(src=p.imagem loading="lazy" alt=p.nomePopular)
                                 .text-left
-                                    p.text-xl.font-bold= p.nomePopular 
+                                    if p.eliminado
+                                        p.text-lg.line-through= p.nomePopular
+                                    else 
+                                        p.text-lg= p.nomePopular 
                                     p
                                         if p.lider 
                                             .badge.badge-warning líder
@@ -35,11 +38,11 @@
                                             .badge.badge-info imune
                                         if p.monstro 
                                             .badge.badge-secondary monstro
-                    td.text-xl= p.estalecas 
-                    td.text-xl= p.xAnjo > 0 ? p.xAnjo : ''
-                    td.text-xl= p.xImune > 0 ? p.xImune : ''
-                    td.text-xl= p.xLider > 0 ? p.xLider : ''
-                    td.text-xl= p.xMonstro > 0 ? p.xMonstro : ''
-                    td.text-xl= p.xParedao > 0 ? p.xParedao : ''
-                    td.text-xl= p.xVip > 0 ? p.xVip : ''
-                    td.text-xl= p.xXepa > 0 ? p.xXepa : ''
+                    td.text-lg= p.estalecas 
+                    td.text-lg= p.xAnjo > 0 ? p.xAnjo : ''
+                    td.text-lg= p.xImune > 0 ? p.xImune : ''
+                    td.text-lg= p.xLider > 0 ? p.xLider : ''
+                    td.text-lg= p.xMonstro > 0 ? p.xMonstro : ''
+                    td.text-lg= p.xParedao > 0 ? p.xParedao : ''
+                    td.text-lg= p.xVip > 0 ? p.xVip : ''
+                    td.text-lg= p.xXepa > 0 ? p.xXepa : ''

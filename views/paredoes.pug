@@ -4,14 +4,14 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
 .w-fit
     .overflow-x-auto
         table.table.table-zebra.table-xs.table-border
-            thead.text-xl.text-center
+            thead.text-lg.text-center
                 tr 
                     th.text-left(rowspan=2) pessoa
                     th(colspan=paredoes.lista.length) paredão
                 tr 
                     each paredao in [...Array(paredoes.lista.length).keys()] 
                         th= `#${paredao+1}`
-            tbody.text-xl.text-center
+            tbody.text-lg.text-center
                 each pFrom of all_participants 
                     - var nFrom = pFrom._id.nome 
                     tr 
@@ -20,7 +20,10 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                 .avatar
                                     .w-8.rounded
                                         img(src=pFrom.imagem loading="lazy" alt=pFrom.nomePopular)
-                                p.text-xl= pFrom.nomePopular
+                                if pFrom.eliminado
+                                    p.text-lg.line-through= pFrom.nomePopular
+                                else
+                                    p.text-lg= pFrom.nomePopular
                         each paredao of paredoes.lista 
                             - var votosFrom = votos.filter(x => x.paredao == paredao._id && x.from == nFrom)
                             td.space-x-2
@@ -89,14 +92,14 @@ p.text-3xl.text-center.pb-4 Votos recebidos em paredões
 .w-fit
     .overflow-x-auto
         table.table.table-zebra.table-xs.table-border
-            thead.text-xl.text-center
+            thead.text-lg.text-center
                 tr 
                     th.text-left(rowspan=2) pessoa
                     th(colspan=paredoes.lista.length) paredão
                 tr 
                     each paredao in [...Array(paredoes.lista.length).keys()] 
                         th= `#${paredao+1}`
-            tbody.text-xl.text-center
+            tbody.text-lg.text-center
                 each pTo of all_participants 
                     - var nTo = pTo._id.nome
                     tr
@@ -105,12 +108,15 @@ p.text-3xl.text-center.pb-4 Votos recebidos em paredões
                                 .avatar
                                     .w-8.rounded
                                         img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
-                                p.text-xl= pTo.nomePopular
+                                if pTo.eliminado
+                                    p.text-lg.line-through= pTo.nomePopular
+                                else
+                                    p.text-lg= pTo.nomePopular
                         each paredao of paredoes.lista
                             - var votosTo = votos.filter(x => x.paredao == paredao._id && x.to == nTo)
                             - var votosNormais = votosTo.filter(x => !x.extra)
                             - var votosEspeciais = votosTo.filter(x => x.extra)
-                            td.text-xl.text-center.space-x-2
+                            td.text-lg.text-center.space-x-2
                                 if paredao.anjo.filter(x => x.from == nTo && x.autoimune).length
                                     .badge.badge-info I
                                 if paredao.anjo.filter(x => x.to == nTo).length
