@@ -147,12 +147,13 @@ const run = async () => {
     }
 
     app.get('/', async (req, res) => {
-        const all_participants = await getParticipants();
+        let all_participants = await getParticipants();
+        all_participants = all_participants.sort((a, b) => Number(a.eliminado) - Number(b.eliminado));
+        
         const participants = all_participants
             .filter((x) => !x.eliminado)
             .sort((a, b) => b.estalecas - a.estalecas)
             .sort((a, b) => Number(b.paredao) - Number(a.paredao))
-            .sort((a, b) => Number(b.eliminado) - Number(a.eliminado));
 
         const paredoes = await getVotosPorParedao();
         const votos = await getVotos();
