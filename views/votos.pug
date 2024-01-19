@@ -15,7 +15,7 @@ mixin tipo_de_voto(voto)
 
 
 .overflow-x-auto
-    table.table.table-zebra.table-xs.table-border
+    table.table.table-xs.table-border
         thead.text-lg
             tr(style='border:none;')
                 th(style='border:none;')
@@ -41,8 +41,10 @@ mixin tipo_de_voto(voto)
                         else 
                             - var votosFromTo = votos.filter(x => x.from == nFrom && x.to == nTo)
                             - var modalId = `show_${iFrom}_${iTo}`
-                            td.text-lg
-                                if votosFromTo.length > 0
+                            if votosFromTo.length > 0
+                                - var bg_color = votos_cores[votosFromTo.length].bg
+                                - var fg_color = votos_cores[votosFromTo.length].fg
+                                td.text-lg(style=`background-color: ${bg_color}; color: ${fg_color}`)
                                     button(onclick=`${modalId}.showModal()`)= votosFromTo.length
                                     dialog(id=modalId class="modal modal-bottom sm:modal-middle")
                                         .modal-box.justify-center
@@ -69,5 +71,5 @@ mixin tipo_de_voto(voto)
                                                     button.btn fechar
                                         form.modal-backdrop(method="dialog")
                                             button
-                                else
-                                    p
+                            else
+                                td.text-lg(style='background-color: #DDDDDD')
