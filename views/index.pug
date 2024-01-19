@@ -20,7 +20,7 @@ mixin list_avatars(list)
                 if p.anjo
                     span.indicator-item.indicator-top.indicator-start.badge.badge-info A
                 if p.imune
-                    span.indicator-item.indicator-bottom.indicator-start.badge.badge-accent I
+                    span.indicator-item.indicator-bottom.indicator-start.badge.badge-info I
                 .w-28.rounded-lg.ring.ring-primary
                     img(src=p.imagem loading="lazy" alt=p.nomePopular)
             .text-md.font-bold.text-center= p.nomePopular
@@ -43,6 +43,17 @@ block content
             div.flex.flex-row.flex-wrap.gap-5.justify-center
                 +list_avatars(xepa)
 
+        div.flex.flex-row.gap-4.py-4.justify-center
+            .flex.items-center
+                .badge.badge-info A
+                p.pl-2 anjo
+            .flex.items-center
+                .badge.badge-info I
+                p.pl-2 imune
+            .flex.items-center
+                .badge.badge-secondary M
+                p.pl-2 monstro
+                    
     .divider.divider-primary
     p.text-3xl.text-center.pb-4 Atividade recente
     .w-fit
