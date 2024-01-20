@@ -49,7 +49,7 @@ mixin tipo_de_voto(voto)
                                 - var fg_color = votos_cores[votosFromTo.length].fg
                                 td.text-lg(style=`background-color: ${bg_color}; color: ${fg_color}`)
                                     button(onclick=`${modalId}.showModal()`)= votosFromTo.length
-                                    dialog(id=modalId class="modal modal-bottom sm:modal-middle")
+                                    dialog(id=modalId class="modal modal-bottom sm:modal-middle" style=`color: #000000;`)
                                         .modal-box.justify-center
                                             p.text-xl
                                             | Votos de 
