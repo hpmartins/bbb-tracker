@@ -88,7 +88,8 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
 
 .divider.divider-primary
 
-p.text-3xl.text-center.pb-4 Votos recebidos em paredões
+p.text-3xl.text-center Votos recebidos em paredões
+p.text-2xl.text-center.py-4 Clique no número de votos para ver mais informações
 .w-fit
     .overflow-x-auto
         table.table.table-zebra.table-xs.table-border
@@ -100,7 +101,7 @@ p.text-3xl.text-center.pb-4 Votos recebidos em paredões
                     each paredao in [...Array(paredoes.lista.length).keys()] 
                         th= `#${paredao+1}`
             tbody.text-lg.text-center
-                each pTo of all_participants 
+                each pTo, iTo in all_participants 
                     - var nTo = pTo._id.nome
                     tr
                         td.text-left
@@ -112,7 +113,7 @@ p.text-3xl.text-center.pb-4 Votos recebidos em paredões
                                     p.text-lg.line-through= pTo.nomePopular
                                 else
                                     p.text-lg= pTo.nomePopular
-                        each paredao of paredoes.lista
+                        each paredao, iParedao in paredoes.lista
                             - var votosTo = votos.filter(x => x.paredao == paredao._id && x.to == nTo)
                             - var votosNormais = votosTo.filter(x => !x.extra)
                             - var votosEspeciais = votosTo.filter(x => x.extra)
@@ -122,10 +123,35 @@ p.text-3xl.text-center.pb-4 Votos recebidos em paredões
                                 if paredao.anjo.filter(x => x.to == nTo).length
                                     .badge.badge-info.badge-outline I
                                 if votosNormais.length > 0
+                                    - var modalId = `paredao_votos_${iParedao}_${iTo}`
                                     if paredao.resultado.includes(nTo)
-                                        .badge.badge-error= votosNormais.length
+                                        .badge.badge-error(onclick=`${modalId}.showModal()`)= votosNormais.length
                                     else
-                                        .badge.badge-neutral= votosNormais.length
+                                        .badge.badge-neutral(onclick=`${modalId}.showModal()`)= votosNormais.length
+                                    dialog(id=modalId class="modal modal-bottom sm:modal-middle")
+                                        .modal-box.justify-center
+                                            p.text-xl
+                                            | Votos recebidos de 
+                                            span.font-bold= pTo.nomePopular
+                                            |  no paredão 
+                                            span.font-bold ##{paredao._id}
+
+                                            .flex.justify-center.pt-5
+                                                .overflow-x-auto
+                                                    table.table.table-zebra.table-xs
+                                                        thead.text-center
+                                                            tr
+                                                                th.text-xl pessoa
+                                                        tbody.text-center
+                                                            for voto in votosNormais
+                                                                - var pFrom = all_participants.filter(x => x._id.nome == voto.from)[0]
+                                                                tr
+                                                                    td.text-xl= pFrom.nomePopular
+                                            .modal-action 
+                                                form(method="dialog")
+                                                    button.btn fechar
+                                        form.modal-backdrop(method="dialog")
+                                            button
                                 if votosEspeciais.length > 0
                                     - var votosIndicacao = votosEspeciais.filter(x => x.extra.indicacao)
                                     - var votosVetos = votosEspeciais.filter(x => x.extra.veto)
