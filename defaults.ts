@@ -607,4 +607,115 @@ export const PAREDOES = [
             },
         ]
     },
+    {
+        _id: 5,
+        resultado: ['alane', 'vinicius-rodrigues', 'marcus-vinicius', 'giovanna-pitel', 'lucas-luigi'],
+        votos: [
+            {
+                from: 'alane',
+                to: 'vinicius-rodrigues'
+            },
+            {
+                from: 'alane',
+                to: 'giovanna-pitel',
+                extra: { contragolpe: true }
+            },
+            {
+                from: 'beatriz',
+                to: 'lucas-henrique'
+            },
+            {
+                from: 'davi',
+                to: 'mc-bin-laden'
+            },
+            {
+                from: 'deniziane',
+                to: 'vinicius-rodrigues',
+            },
+            {
+                from: 'fernanda',
+                to: 'isabelle'
+            },
+            {
+                from: 'giovanna',
+                to: 'fernanda'
+            },
+            {
+                from: 'giovanna-pitel',
+                to: 'marcus-vinicius'
+            },
+            {
+                from: 'giovanna-pitel',
+                to: 'lucas-luigi',
+                extra: { group_vote: true }
+            },
+            {
+                from: 'isabelle',
+                to: 'mc-bin-laden'
+            },
+            {
+                from: 'juninho',
+                to: 'giovanna'
+            },
+            {
+                from: 'leidy-elin',
+                to: 'vinicius-rodrigues'
+            },
+            {
+                from: 'lucas-henrique',
+                to: 'davi'
+            },
+            {
+                from: 'lucas-luigi',
+                to: 'davi'
+            },
+            {
+                from: 'marcus-vinicius',
+                to: 'vinicius-rodrigues'
+            },
+            {
+                from: 'marcus-vinicius',
+                to: 'lucas-luigi',
+                extra: { group_vote: true }
+            },
+            {
+                from: 'matteus',
+                to: 'juninho'
+            },
+            {
+                from: 'mc-bin-laden',
+                to: 'marcus-vinicius'
+            },
+            {
+                from: 'michel',
+                to: 'lucas-henrique'
+            },
+            {
+                from: 'raquele',
+                to: 'deniziane'
+            },
+            {
+                from: 'rodriguinho',
+                to: 'alane',
+                extra: { indicacao: true }
+            },
+            {
+                from: 'vinicius-rodrigues',
+                to: 'marcus-vinicius'
+            },
+            {
+                from: 'vinicius-rodrigues',
+                to: 'marcus-vinicius',
+                extra: { contragolpe: true }
+            },
+            {
+                from: 'wanessa-camargo',
+                to: 'lucas-luigi'
+            },
+            {
+                from: 'yasmin-brunet',
+                to: 'mc-bin-laden'
+            }
+        ]
+    },
 ];
