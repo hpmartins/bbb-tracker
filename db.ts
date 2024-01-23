@@ -42,6 +42,14 @@ export interface IParticipante {
     updatedAt: Date;
 }
 
+export interface IVoteExtra {
+    veto?: boolean;
+    group_vote?: boolean;
+    minerva?: boolean;
+    contragolpe?: boolean;
+    indicacao?: boolean;
+}
+
 export interface IParedao {
     _id: number;
     resultado: string[];
@@ -53,13 +61,7 @@ export interface IParedao {
     votos: {
         from: string;
         to: string | null;
-        extra?: {
-            veto?: boolean;
-            group_vote?: boolean;
-            minerva?: boolean;
-            contragolpe?: boolean;
-            indicacao?: boolean;
-        };
+        extra?: IVoteExtra;
     }[];
 }
 

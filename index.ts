@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
-import { IParticipante, Paredao, Participante } from './db';
+import { IParticipante, IVoteExtra, Paredao, Participante } from './db';
 import chroma from 'chroma-js';
 
 import dayjs from 'dayjs';
@@ -118,7 +118,12 @@ const getActivityDeltas = async () => {
 };
 
 const getVotos = async () => {
-    const votos = await Paredao.aggregate()
+    const votos: {
+        paredao: number;
+        from: string;
+        to: string;
+        extra?: IVoteExtra;
+    }[] = await Paredao.aggregate()
         .unwind('$votos')
         .project({
             paredao: '$_id',
@@ -129,6 +134,15 @@ const getVotos = async () => {
         .sort({ paredao: 1 });
 
     return votos;
+};
+
+const VOTE_WEIGHTS: { [key: string]: number } = {
+    normal: 10,
+    indicacao: 100,
+    contragolpe: 50,
+    veto: 5,
+    group_vote: 5,
+    minerva: 75,
 };
 
 const run = async () => {
@@ -146,14 +160,39 @@ const run = async () => {
         await Paredao.findOneAndReplace({ _id: paredao._id }, paredao, { upsert: true });
     }
 
+    app.get('/chord', async (req, res) => {
+        const votos = await getVotos();
+
+        let participants = await getParticipants();
+        participants = participants.filter(x => !x.eliminado);
+
+        const vote_matrix = participants.map(p1 => {
+            return participants.map(p2 => votos.filter((x) => x.from == p1._id.nome && x.to == p2._id.nome).map((x) => {
+                if (x.extra) {
+                    return Object.keys(x.extra).map((v) => VOTE_WEIGHTS[v]).reduce((a,b) => a+b);
+                } else {
+                    return VOTE_WEIGHTS.normal
+                }
+            }).reduce((a,b) => a+b, 0))
+        })
+        res.render('chord', {
+            votos: votos,
+            matrix: vote_matrix,
+            colors: participants.map(() => chroma.random().hex()),
+            names: participants.map(x => x.nomePopular),
+        });
+    });
+
     app.get('/', async (req, res) => {
         let all_participants = await getParticipants();
-        all_participants = all_participants.sort((a, b) => Number(a.eliminado) - Number(b.eliminado));
-        
+        all_participants = all_participants.sort(
+            (a, b) => Number(a.eliminado) - Number(b.eliminado)
+        );
+
         const participants = all_participants
             .filter((x) => !x.eliminado)
             .sort((a, b) => b.estalecas - a.estalecas)
-            .sort((a, b) => Number(b.paredao) - Number(a.paredao))
+            .sort((a, b) => Number(b.paredao) - Number(a.paredao));
 
         const paredoes = await getVotosPorParedao();
         const votos = await getVotos();
