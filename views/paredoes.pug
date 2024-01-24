@@ -34,7 +34,6 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                     .avatar
                                         .w-8.rounded.ring.ring-info
                                             img(src=anjoTo.imagem loading="lazy" alt=anjoTo.nomePopular title=anjoTo.nomePopular)
-                                - var anyExtra = votosFrom.filter(x => x.extra).length
                                 each voto of votosFrom
                                     if !voto.to.length
                                         - break
@@ -58,7 +57,7 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                                 .w-8.rounded.ring.ring-primary 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                         else
-                                            if paredao.resultado.includes(nTo) && !anyExtra
+                                            if paredao.resultado.includes(nTo)
                                                 .w-8.rounded.ring.ring-error 
                                                     img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
                                             else
