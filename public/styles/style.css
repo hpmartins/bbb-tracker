@@ -1868,6 +1868,10 @@ html {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -2018,6 +2022,24 @@ html {
       max-width: 1536px;
     }
   }
+}
+.hover\:bg-gray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+.hover\:bg-primary:hover {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
+}
+.hover\:bg-gray-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+.hover\:bg-gray-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+@media (min-width: 768px) {
 
   .md\:mx-auto {
     margin-left: auto;
