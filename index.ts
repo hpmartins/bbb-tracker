@@ -1,4 +1,5 @@
 import 'dotenv/config';
+var cron = require('node-cron');
 import express from 'express';
 import path from 'path';
 import { IParticipante, IVoteExtra, Paredao, Participante } from './db';
@@ -12,6 +13,35 @@ import { PAREDOES } from './defaults';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 const TIMEZONE = 'America/Sao_Paulo';
+
+let VOTOS_DATA: {
+    paredao: number;
+    from: string;
+    to: string;
+    extra?: IVoteExtra;
+}[];
+
+let PAREDOES_DATA: {
+    lista: any[];
+    votos: object[];
+};
+
+let DELTAS_DATA: {
+    nome: string;
+    nomePopular: string;
+    imagem: string;
+    modified: Date;
+    delta: number;
+}[];
+
+let PARTICIPANTS_DATA: IParticipante[];
+
+const updateAll = async () => {
+    VOTOS_DATA = await getVotos();
+    PAREDOES_DATA = await getVotosPorParedao();
+    DELTAS_DATA = await getActivityDeltas();
+    PARTICIPANTS_DATA = await getParticipants();
+};
 
 const countUnique = (arr: any[]) => {
     const counts: { [key: string]: any } = {};
@@ -142,7 +172,13 @@ const VOTE_WEIGHTS: { [key: string]: number } = {
     contragolpe: 50,
     veto: 5,
     group_vote: 5,
-    minerva: 75,
+    minerva: 75
+};
+
+const scheduleTasks = () => {
+    cron.schedule('*/1 * * * *', async () => {
+        await updateAll();
+    });
 };
 
 const run = async () => {
@@ -160,32 +196,36 @@ const run = async () => {
         await Paredao.findOneAndReplace({ _id: paredao._id }, paredao, { upsert: true });
     }
 
-    app.get('/chord', async (req, res) => {
-        const votos = await getVotos();
+    await updateAll();
+    scheduleTasks();
 
-        let participants = await getParticipants();
-        participants = participants.filter(x => !x.eliminado);
-
-        const vote_matrix = participants.map(p1 => {
-            return participants.map(p2 => votos.filter((x) => x.from == p1._id.nome && x.to == p2._id.nome).map((x) => {
-                if (x.extra) {
-                    return Object.keys(x.extra).map((v) => VOTE_WEIGHTS[v]).reduce((a,b) => a+b);
-                } else {
-                    return VOTE_WEIGHTS.normal
-                }
-            }).reduce((a,b) => a+b, 0))
-        })
+    app.get('/chord', (req, res) => {
+        const participants = PARTICIPANTS_DATA.filter((x) => !x.eliminado);
+        const vote_matrix = participants.map((p1) => {
+            return participants.map((p2) =>
+                VOTOS_DATA.filter((x) => x.from == p1._id.nome && x.to == p2._id.nome)
+                    .map((x) => {
+                        if (x.extra) {
+                            return Object.keys(x.extra)
+                                .map((v) => VOTE_WEIGHTS[v])
+                                .reduce((a, b) => a + b);
+                        } else {
+                            return VOTE_WEIGHTS.normal;
+                        }
+                    })
+                    .reduce((a, b) => a + b, 0)
+            );
+        });
         res.render('chord', {
-            votos: votos,
+            votos: VOTOS_DATA,
             matrix: vote_matrix,
             colors: participants.map(() => chroma.random().hex()),
-            names: participants.map(x => x.nomePopular),
+            names: participants.map((x) => x.nomePopular)
         });
     });
 
-    app.get('/', async (req, res) => {
-        let all_participants = await getParticipants();
-        all_participants = all_participants.sort(
+    app.get('/', (req, res) => {
+        const all_participants = PARTICIPANTS_DATA.sort(
             (a, b) => Number(a.eliminado) - Number(b.eliminado)
         );
 
@@ -193,21 +233,15 @@ const run = async () => {
             .filter((x) => !x.eliminado)
             .sort((a, b) => b.estalecas - a.estalecas)
             .sort((a, b) => Number(b.paredao) - Number(a.paredao));
-
-        const paredoes = await getVotosPorParedao();
-        const votos = await getVotos();
-
         const lider = participants.filter((x) => x.lider);
         const vip = participants.filter((x) => !x.lider && x.grupo === 'VIP');
         const xepa = participants.filter((x) => !x.lider && x.grupo === 'XEPA');
-
-        const deltas = await getActivityDeltas();
 
         let votos_count: number[] = [];
         for (let p1 of all_participants) {
             for (let p2 of all_participants) {
                 votos_count.push(
-                    votos.filter((x) => x.from == p1._id.nome && x.to == p2._id.nome).length
+                    VOTOS_DATA.filter((x) => x.from == p1._id.nome && x.to == p2._id.nome).length
                 );
             }
         }
@@ -234,10 +268,10 @@ const run = async () => {
             lider: lider,
             vip: vip,
             xepa: xepa,
-            paredoes: paredoes,
-            votos: votos,
+            paredoes: PAREDOES_DATA,
+            votos: VOTOS_DATA,
             votos_cores: votos_cores,
-            activity: deltas.map((x) => ({
+            activity: DELTAS_DATA.map((x) => ({
                 ...x,
                 modified: dayjs(x.modified).tz(TIMEZONE).format('DD/MM HH:mm')
             }))
