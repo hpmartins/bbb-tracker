@@ -48,6 +48,7 @@ export interface IVoteExtra {
     minerva?: boolean;
     contragolpe?: boolean;
     indicacao?: boolean;
+    bigfone?: boolean;
 }
 
 export interface IParedao {

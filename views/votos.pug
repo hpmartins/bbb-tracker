@@ -10,6 +10,8 @@ mixin tipo_de_voto(voto)
             td.text-xl veto
         else if voto.extra.group_vote 
             td.text-xl consenso em grupo
+        else if voto.extra.bigfone 
+            td.text-xl big fone
     else 
         td.text-xl normal
 
