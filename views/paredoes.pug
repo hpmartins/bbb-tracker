@@ -15,15 +15,12 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                 each pFrom of all_participants 
                     - var nFrom = pFrom._id.nome 
                     tr 
-                        td.text-left
+                        td.text-left(class=`${pFrom.eliminado ? "grayscale" : ""}`)
                             .flex.items-center.space-x-3
                                 .avatar
                                     .w-8.rounded
                                         img(src=pFrom.imagem loading="lazy" alt=pFrom.nomePopular)
-                                if pFrom.eliminado
-                                    p.text-lg.line-through= pFrom.nomePopular
-                                else
-                                    p.text-lg= pFrom.nomePopular
+                                p.text-lg= pFrom.nomePopular
                         each paredao of paredoes.lista 
                             - var votosFrom = votos.filter(x => x.paredao == paredao._id && x.from == nFrom)
                             td.space-x-2
@@ -111,15 +108,12 @@ p.text-2xl.text-center.py-4 Clique no número de votos para ver mais informaçõ
                 each pTo, iTo in all_participants 
                     - var nTo = pTo._id.nome
                     tr
-                        td.text-left
+                        td.text-left(class=`${pTo.eliminado ? "grayscale" : ""}`)
                             .flex.items-center.space-x-3
                                 .avatar
                                     .w-8.rounded
                                         img(src=pTo.imagem loading="lazy" alt=pTo.nomePopular title=pTo.nomePopular)
-                                if pTo.eliminado
-                                    p.text-lg.line-through= pTo.nomePopular
-                                else
-                                    p.text-lg= pTo.nomePopular
+                                p.text-lg= pTo.nomePopular
                         each paredao, iParedao in paredoes.lista
                             - var votosTo = votos.filter(x => x.paredao == paredao._id && x.to == nTo)
                             - var votosNormais = votosTo.filter(x => !x.extra)

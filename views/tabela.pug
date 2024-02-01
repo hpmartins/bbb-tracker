@@ -22,7 +22,7 @@
               }});
 
             each p in sorted_participants 
-                tr
+                tr(class=`${p.eliminado ? "grayscale" : ""}`)
                     td
                         a(href=p.url target="_blank")
                             .flex.items-center.space-x-3
@@ -30,10 +30,7 @@
                                     .w-10.rounded
                                         img(src=p.imagem loading="lazy" alt=p.nomePopular)
                                 .text-left
-                                    if p.eliminado
-                                        p.text-lg.line-through= p.nomePopular
-                                    else 
-                                        p.text-lg= p.nomePopular 
+                                    p.text-lg= p.nomePopular 
                                     p
                                         if p.lider 
                                             .badge.badge-warning líder

@@ -28,7 +28,7 @@ mixin list_avatars(list)
 mixin list_eliminados(list)
     each p in list
         a(href=p.url target="_blank"): .flex.flex-col.gap-y-2.p-2.items-center
-            .avatar.indicator
+            .avatar.indicator(class=`${p.eliminado ? "grayscale" : ""}`)
                 .w-16.rounded-lg.ring.ring-gray-800
                     img(src=p.imagem loading="lazy" alt=p.nomePopular)
             .text-sm.font-bold.text-center= p.nomePopular
