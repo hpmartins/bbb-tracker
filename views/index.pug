@@ -25,6 +25,14 @@ mixin list_avatars(list)
                     img(src=p.imagem loading="lazy" alt=p.nomePopular)
             .text-md.font-bold.text-center= p.nomePopular
 
+mixin list_eliminados(list)
+    each p in list
+        a(href=p.url target="_blank"): .flex.flex-col.gap-y-2.p-2.items-center
+            .avatar.indicator
+                .w-16.rounded-lg.ring.ring-gray-800
+                    img(src=p.imagem loading="lazy" alt=p.nomePopular)
+            .text-sm.font-bold.text-center= p.nomePopular
+
 block content
     .divider.divider-primary
     .w-full
@@ -53,6 +61,11 @@ block content
             .flex.items-center
                 .badge.badge-secondary M
                 p.pl-2 monstro
+
+        div.py-2
+            p.text-2xl.text-center.py-2 Eliminados
+            div.flex.flex-row.flex-wrap.gap-5.justify-center
+                +list_eliminados(eliminados)
                     
     .divider.divider-primary
     p.text-3xl.text-center.pb-4 Atividade recente

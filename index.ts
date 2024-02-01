@@ -224,9 +224,17 @@ const run = async () => {
     });
 
     app.get('/', (req, res) => {
-        const all_participants = PARTICIPANTS_DATA.sort(
-            (a, b) => Number(a.eliminado) - Number(b.eliminado)
-        );
+        const all_participants = PARTICIPANTS_DATA.sort((a, b) => {
+            if (a.eliminado && !b.eliminado) {
+                return 1;
+            } else if (!a.eliminado && b.eliminado) {
+                return -1;
+            } else if (!a.eliminado && !b.eliminado) {
+                return a._id.nome.localeCompare(b._id.nome);
+            } else {
+                return dayjs(b._id.modified).isAfter(a._id.modified) ? 1 : -1;
+            }
+        });
 
         const participants = all_participants
             .filter((x) => !x.eliminado)
@@ -235,6 +243,9 @@ const run = async () => {
         const lider = participants.filter((x) => x.lider);
         const vip = participants.filter((x) => !x.lider && x.grupo === 'VIP');
         const xepa = participants.filter((x) => !x.lider && x.grupo === 'XEPA');
+        const eliminados = all_participants
+            .filter((x) => x.eliminado)
+            .sort((a, b) => (dayjs(b._id.modified).isAfter(a._id.modified) ? 1 : -1));
 
         let votos_count: number[] = [];
         for (let p1 of all_participants) {
@@ -263,10 +274,10 @@ const run = async () => {
 
         res.render('index', {
             all_participants: all_participants,
-            participants: participants,
             lider: lider,
             vip: vip,
             xepa: xepa,
+            eliminados: eliminados,
             paredoes: PAREDOES_DATA,
             votos: VOTOS_DATA,
             votos_cores: votos_cores,

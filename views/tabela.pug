@@ -11,9 +11,16 @@
             th VIPs 
             th xepas
         tbody.text-center
-            - var sorted_participants = all_participants.sort((a, b) => (b.estalecas - a.estalecas))
-            //- - sorted_participants = sorted_participants.filter((x) => !x.eliminado)
-            - sorted_participants = sorted_participants.sort((a, b) => (Number(a.eliminado) - Number(b.eliminado)))
+            - 
+              var sorted_participants = all_participants.sort((a, b) => {
+                if(a.eliminado && !b.eliminado){
+                return 1;
+                }else if(!a.eliminado && b.eliminado){
+                return -1;
+                }else {
+                    return b.estalecas - a.estalecas;
+              }});
+
             each p in sorted_participants 
                 tr
                     td
