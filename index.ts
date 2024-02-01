@@ -109,7 +109,7 @@ const getActivityDeltas = async () => {
             list: {
                 $sortArray: {
                     input: '$list',
-                    sortBy: { modified: -1 }
+                    sortBy: { _id: -1 }
                 }
             },
             n: { $size: '$list' }
@@ -131,20 +131,19 @@ const getActivityDeltas = async () => {
 
     grouped.map((x) => {
         for (let i = 0; i < x.list.length - 1; i++) {
-            let diff = x.list[i].estalecas - x.list[i + 1].estalecas;
-            if (diff != 0) {
-                deltas.push({
-                    nome: x._id,
-                    nomePopular: x.list[i].nomePopular,
-                    imagem: x.list[i].imagem,
-                    modified: x.list[i]._id,
-                    delta: x.list[i].estalecas - x.list[i + 1].estalecas
-                });
-            }
+            deltas.push({
+                nome: x._id,
+                nomePopular: x.list[i].nomePopular,
+                imagem: x.list[i].imagem,
+                modified: x.list[i]._id,
+                delta: x.list[i].estalecas - x.list[i + 1].estalecas
+            });
         }
     });
 
-    return deltas.sort((a, b) => (dayjs(a.modified).isAfter(b.modified) ? -1 : 1));
+    return deltas
+        .filter((x) => x.delta != 0)
+        .sort((a, b) => (dayjs(a.modified).isAfter(b.modified) ? -1 : 1));
 };
 
 const getVotos = async () => {
