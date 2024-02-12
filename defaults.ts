@@ -1010,5 +1010,96 @@ export const PAREDOES = [
                 to: 'giovanna',
             },
         ]
-    }
+    },
+    {
+        _id: 8,
+        resultado: ['davi', 'isabelle', 'marcus-vinicius'],
+        anjo: [
+            {
+                from: 'michel',
+                to: 'giovanna',
+                autoimune: true,
+            },
+        ],
+        votos: [
+            {
+                from: 'alane',
+                to: 'fernanda',
+            },
+            {
+                from: 'beatriz',
+                to: 'fernanda',
+            },
+            {
+                from: 'davi',
+                to: 'fernanda',
+            },
+            {
+                from: 'deniziane',
+                to: 'fernanda',
+            },
+            {
+                from: 'fernanda',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'giovanna',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'giovanna-pitel',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'isabelle',
+                to: 'fernanda',
+            },
+            {
+                from: 'leidy-elin',
+                to: 'fernanda',
+            },
+            {
+                from: 'lucas-henrique',
+                to: 'davi',
+                extra: { indicacao: true }
+            },
+            {
+                from: 'lucas-henrique',
+                to: 'isabelle',
+                extra: { minerva: true }
+            },
+            {
+                from: 'marcus-vinicius',
+                to: 'fernanda'
+            },
+            {
+                from: 'matteus',
+                to: 'fernanda',
+            },
+            {
+                from: 'mc-bin-laden',
+                to: 'wanessa-camargo',
+            },
+            {
+                from: 'michel',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'raquele',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'rodriguinho',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'wanessa-camargo',
+                to: 'fernanda',
+            },
+            {
+                from: 'yasmin-brunet',
+                to: 'fernanda',
+            },
+        ],
+    },
 ];
