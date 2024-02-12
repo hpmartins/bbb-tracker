@@ -25,7 +25,7 @@ mixin tipo_de_voto(voto)
                     th(class=`${p.eliminado ? "grayscale" : ""}`)
                         .avatar
                             .w-8.rounded
-                                img(src=p.imagem loading="lazy" alt=p.nomePopular title=p.nomePopular)
+                                img(src=p.imagem alt=p.nomePopular title=p.nomePopular)
         tbody.text-center
             each pFrom, iFrom in all_participants 
                 tr(class=`${pFrom.eliminado ? "grayscale" : ""}`)
@@ -34,7 +34,7 @@ mixin tipo_de_voto(voto)
                             p.text-lg= pFrom.nomePopular
                             .avatar
                                 .w-8.rounded
-                                    img(src=pFrom.imagem loading="lazy" alt=pFrom.nomePopular)
+                                    img(src=pFrom.imagem alt=pFrom.nomePopular)
                     each pTo, iTo in all_participants
                         - var nFrom = pFrom._id.nome 
                         - var nTo = pTo._id.nome

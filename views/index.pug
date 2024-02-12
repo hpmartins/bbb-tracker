@@ -22,7 +22,7 @@ mixin list_avatars(list)
                 if p.imune
                     span.indicator-item.indicator-bottom.indicator-start.badge.badge-info I
                 .w-28.rounded-lg.ring.ring-primary
-                    img(src=p.imagem loading="lazy" alt=p.nomePopular)
+                    img(src=p.imagem alt=p.nomePopular)
             .text-md.font-bold.text-center= p.nomePopular
 
 mixin list_eliminados(list)
@@ -30,7 +30,7 @@ mixin list_eliminados(list)
         a(href=p.url target="_blank"): .flex.flex-col.gap-y-2.p-2.items-center
             .avatar.indicator(class=`${p.eliminado ? "grayscale" : ""}`)
                 .w-16.rounded-lg.ring.ring-gray-800
-                    img(src=p.imagem loading="lazy" alt=p.nomePopular)
+                    img(src=p.imagem alt=p.nomePopular)
             .text-sm.font-bold.text-center= p.nomePopular
 
 block content
