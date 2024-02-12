@@ -842,4 +842,173 @@ export const PAREDOES = [
             },
         ]
     },
+    {
+        _id: 7,
+        resultado: ['beatriz', 'alane', 'isabelle', 'juninho'],
+        anjo: [
+            {
+                from: 'matteus',
+                to: 'deniziane',
+                autoimune: true,
+            },
+        ],
+        votos: [
+            {
+                from: 'fernanda',
+                to: 'beatriz',
+                extra: { indicacao: true }
+            },
+            {
+                from: 'fernanda',
+                to: 'alane',
+                extra: { minerva: true }
+            },
+            // voto AB/BA
+            {
+                from: 'alane',
+                to: 'juninho',
+            },
+            {
+                from: 'beatriz',
+                to: 'juninho',
+            },
+            {
+                from: 'davi',
+                to: 'mc-bin-laden',
+            },
+            {
+                from: 'deniziane',
+                to: 'juninho',
+            },
+            {
+                from: 'giovanna',
+                to: 'alane',
+            },
+            {
+                from: 'giovanna-pitel',
+                to: 'alane',
+            },
+            {
+                from: 'isabelle',
+                to: 'juninho',
+            },
+            {
+                from: 'juninho',
+                to: 'alane',
+            },
+            {
+                from: 'leidy-elin',
+                to: 'michel',
+            },
+            {
+                from: 'lucas-henrique',
+                to: 'isabelle',
+            },
+            {
+                from: 'marcus-vinicius',
+                to: 'raquele'
+            },
+            {
+                from: 'matteus',
+                to: 'juninho',
+            },
+            {
+                from: 'mc-bin-laden',
+                to: 'wanessa-camargo',
+            },
+            {
+                from: 'michel',
+                to: 'juninho',
+            },
+            {
+                from: 'raquele',
+                to: 'juninho',
+            },
+            {
+                from: 'rodriguinho',
+                to: 'isabelle',
+            },
+            {
+                from: 'wanessa-camargo',
+                to: 'mc-bin-laden',
+            },
+            {
+                from: 'yasmin-brunet',
+                to: 'isabelle',
+            },
+            // votos AA/BB
+            {
+                from: 'alane',
+                to: 'raquele',
+            },
+            {
+                from: 'beatriz',
+                to: 'michel',
+            },
+            {
+                from: 'davi',
+                to: 'michel',
+            },
+            {
+                from: 'deniziane',
+                to: 'isabelle',
+            },
+            {
+                from: 'giovanna',
+                to: 'yasmin-brunet',
+            },
+            {
+                from: 'giovanna-pitel',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'isabelle',
+                to: 'wanessa-camargo',
+            },
+            {
+                from: 'juninho',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'leidy-elin',
+                to: 'rodriguinho',
+            },
+            {
+                from: 'lucas-henrique',
+                to: 'giovanna',
+            },
+            {
+                from: 'marcus-vinicius',
+                to: 'giovanna'
+            },
+            {
+                from: 'matteus',
+                to: 'isabelle',
+            },
+            {
+                from: 'mc-bin-laden',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'michel',
+                to: 'wanessa-camargo',
+            },
+            {
+                from: 'raquele',
+                to: 'wanessa-camargo',
+            },
+            {
+                from: 'rodriguinho',
+                to: 'marcus-vinicius',
+            },
+            {
+                from: 'wanessa-camargo',
+                to: 'raquele',
+            },
+            {
+                from: 'yasmin-brunet',
+                to: 'giovanna',
+            },
+        ]
+    }
 ];
