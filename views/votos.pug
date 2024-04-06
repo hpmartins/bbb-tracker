@@ -12,6 +12,8 @@ mixin tipo_de_voto(voto)
             td.text-xl consenso em grupo
         else if voto.extra.bigfone 
             td.text-xl big fone
+        else if voto.extra.protecao 
+            td.text-xl salvar
     else 
         td.text-xl normal
 
@@ -28,7 +30,7 @@ mixin tipo_de_voto(voto)
                                 img(src=p.imagem alt=p.nomePopular title=p.nomePopular)
         tbody.text-center
             each pFrom, iFrom in all_participants 
-                tr(class=`${pFrom.eliminado ? "grayscale" : ""}`)
+                tr(class=`${pFrom.eliminado ? "" : ""}`)
                     td.text-right(class=`${pFrom.eliminado ? "grayscale" : ""}`)
                         .flex.items-center.justify-end.space-x-3
                             p.text-lg= pFrom.nomePopular
@@ -39,14 +41,14 @@ mixin tipo_de_voto(voto)
                         - var nFrom = pFrom._id.nome 
                         - var nTo = pTo._id.nome
                         if pFrom._id.nome == pTo._id.nome 
-                            td.text-lg(class=`${pTo.eliminado ? "grayscale" : ""}` style='background-color: #777777')
+                            td.text-lg(class=`${pTo.eliminado ? "" : ""}` style='background-color: #777777')
                         else 
                             - var votosFromTo = votos.filter(x => x.from == nFrom && x.to == nTo)
                             - var modalId = `show_${iFrom}_${iTo}`
                             if votosFromTo.length > 0
                                 - var bg_color = votos_cores[votosFromTo.length].bg
                                 - var fg_color = votos_cores[votosFromTo.length].fg
-                                td.text-lg(class=`${pTo.eliminado ? "grayscale" : ""}` style=`background-color: ${bg_color}; color: ${fg_color}`)
+                                td.text-lg(class=`${pTo.eliminado ? "" : ""}` style=`background-color: ${bg_color}; color: ${fg_color}`)
                                     button(onclick=`${modalId}.showModal()`)= votosFromTo.length
                                     dialog(id=modalId class="modal modal-bottom sm:modal-middle" style=`color: #000000;`)
                                         .modal-box.justify-center
@@ -74,4 +76,4 @@ mixin tipo_de_voto(voto)
                                         form.modal-backdrop(method="dialog")
                                             button
                             else
-                                td.text-lg(class=`${pTo.eliminado ? "grayscale" : ""}` style='background-color: #DDDDDD')
+                                td.text-lg(class=`${pTo.eliminado ? "" : ""}` style='background-color: #DDDDDD')

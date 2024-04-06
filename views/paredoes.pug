@@ -56,6 +56,9 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                             if voto.extra.bigfone
                                                 .w-8.rounded.ring.ring-primary 
                                                     img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                            if voto.extra.protecao
+                                                .w-8.rounded.ring.ring-secondary 
+                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
                                         else
                                             if paredao.resultado.includes(nTo)
                                                 .w-8.rounded.ring.ring-error 
@@ -89,6 +92,10 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
             .avatar
                 .w-8.rounded.ring.ring-primary
             p.pl-2 big fone
+        .flex.items-center
+            .avatar
+                .w-8.rounded.ring.ring-secondary
+            p.pl-2 salvar
 
 .divider.divider-primary
 
@@ -160,6 +167,7 @@ p.text-2xl.text-center.py-4 Clique no número de votos para ver mais informaçõ
                                     - var votosContragolpe = votosEspeciais.filter(x => x.extra.contragolpe)
                                     - var votosGroupVote = votosEspeciais.filter(x => x.extra.group_vote)
                                     - var votosBigFone = votosEspeciais.filter(x => x.extra.bigfone)
+                                    - var votosProtecao = votosEspeciais.filter(x => x.extra.protecao)
                                     if votosIndicacao.length > 0
                                         .badge.badge-error L
                                     if votosVetos.length > 0
@@ -172,6 +180,8 @@ p.text-2xl.text-center.py-4 Clique no número de votos para ver mais informaçõ
                                         .badge.badge-primary.badge-outline G
                                     if votosBigFone.length > 0
                                         .badge.badge-primary F
+                                    if votosProtecao.length > 0
+                                        .badge.badge-secondary S
 
     .grid.grid-cols-2.flex.justify-center.py-4
         .flex.items-center
@@ -200,4 +210,7 @@ p.text-2xl.text-center.py-4 Clique no número de votos para ver mais informaçõ
             p.pl-2 em grupo
         .flex.items-center
             .badge.badge-primary F
-            p.pl-2 big fone
+            p.pl-2 big fone        
+        .flex.items-center
+            .badge.badge-secondary S
+            p.pl-2 salvar     

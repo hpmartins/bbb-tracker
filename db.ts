@@ -49,6 +49,7 @@ export interface IVoteExtra {
     contragolpe?: boolean;
     indicacao?: boolean;
     bigfone?: boolean;
+    protecao?: boolean;
 }
 
 export interface IParedao {
