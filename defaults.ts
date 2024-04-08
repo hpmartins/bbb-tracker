@@ -1837,5 +1837,38 @@ export const PAREDOES = [
                 extra: { protecao: true }
             },
         ],
+    },
+    {
+        _id: 19,
+        resultado: ['alane', 'lucas-henrique', 'isabelle'],
+        anjo: [         
+        ],
+        votos: [
+            {
+                from: 'alane',
+                to: 'isabelle',
+            },
+            {
+                from: 'beatriz',
+                to: 'isabelle',
+            },
+            {
+                from: 'davi',
+                to: 'lucas-henrique',
+                extra: { indicacao: true }
+            },
+            {
+                from: 'isabelle',
+                to: 'matteus',
+            },
+            {
+                from: 'lucas-henrique',
+                to: 'matteus',
+            },
+            {
+                from: 'matteus',
+                to: 'isabelle',
+            },
+        ],
     }
 ];
