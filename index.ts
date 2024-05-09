@@ -165,15 +165,6 @@ const getVotos = async () => {
     return votos;
 };
 
-const VOTE_WEIGHTS: { [key: string]: number } = {
-    normal: 10,
-    indicacao: 100,
-    contragolpe: 50,
-    veto: 5,
-    group_vote: 5,
-    minerva: 75
-};
-
 const scheduleTasks = () => {
     cron.schedule('*/1 * * * *', async () => {
         await updateAll();
@@ -197,31 +188,6 @@ const run = async () => {
 
     await updateAll();
     scheduleTasks();
-
-    app.get('/chord', (req, res) => {
-        const participants = PARTICIPANTS_DATA.filter((x) => !x.eliminado);
-        const vote_matrix = participants.map((p1) => {
-            return participants.map((p2) =>
-                VOTOS_DATA.filter((x) => x.from == p1._id.nome && x.to == p2._id.nome)
-                    .map((x) => {
-                        if (x.extra) {
-                            return Object.keys(x.extra)
-                                .map((v) => VOTE_WEIGHTS[v])
-                                .reduce((a, b) => a + b);
-                        } else {
-                            return VOTE_WEIGHTS.normal;
-                        }
-                    })
-                    .reduce((a, b) => a + b, 0)
-            );
-        });
-        res.render('chord', {
-            votos: VOTOS_DATA,
-            matrix: vote_matrix,
-            colors: participants.map(() => chroma.random().hex()),
-            names: participants.map((x) => x.nomePopular)
-        });
-    });
 
     app.get('/', (req, res) => {
         const all_participants = PARTICIPANTS_DATA.sort((a, b) => {
