@@ -1,4 +1,5 @@
-import { IParticipante, IVoteExtra, Paredao, Participante } from './db';
+import { Paredao, Participante } from './db';
+import { IParticipante, IVoteExtra } from './defaults';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';

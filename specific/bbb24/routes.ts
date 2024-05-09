@@ -5,16 +5,34 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import BBB24JsonData from './bbb24_data.json';
+const BBB24JsonData = require('./bbb24_data.json');
+import { IParticipante, IVoteExtra } from './defaults';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 const TIMEZONE = 'America/Sao_Paulo';
 
-const PARTICIPANTS_DATA = BBB24JsonData.participantes;
-const VOTOS_DATA = BBB24JsonData.votos;
-const PAREDOES_DATA = BBB24JsonData.paredoes;
-const DELTAS_DATA = BBB24JsonData.deltas;
+const PARTICIPANTS_DATA: IParticipante[] = BBB24JsonData.participantes;
+
+const VOTOS_DATA: {
+    paredao: number;
+    from: string;
+    to: string;
+    extra?: IVoteExtra;
+}[] = BBB24JsonData.votos;
+
+const PAREDOES_DATA: {
+    lista: any[];
+    votos: object[];
+} = BBB24JsonData.paredoes;
+
+const DELTAS_DATA: {
+    nome: string;
+    nomePopular: string;
+    imagem: string;
+    modified: string;
+    delta: number;
+}[] = BBB24JsonData.deltas;
 
 const bbb24Route = Router();
 

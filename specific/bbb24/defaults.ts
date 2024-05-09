@@ -1,3 +1,68 @@
+export interface IParticipante {
+    _id: {
+        nome: string;
+        modified: string;
+    };
+    abandono: boolean;
+    aniversario: string;
+    anjo: boolean;
+    desclassificado: boolean;
+    eliminado: boolean;
+    estalecas: number;
+    facebook: string | null;
+    grupo: string;
+    idade: number;
+    imagem: string;
+    imune: boolean;
+    instagram: string | null;
+    lider: boolean;
+    membro: string;
+    monstro: boolean;
+    nomeCompleto: string;
+    nomePopular: string;
+    ondeMora: string;
+    paredao: boolean;
+    profissao: string;
+    statusPrioritario: string[] | null;
+    statusPrioritarioSlugified: string[] | null;
+    twitter: string | null;
+    url: string;
+    xAnjo: number;
+    xImune: number;
+    xLider: number;
+    xMonstro: number;
+    xParedao: number;
+    xVip: number;
+    xXepa: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface IVoteExtra {
+    veto?: boolean;
+    group_vote?: boolean;
+    minerva?: boolean;
+    contragolpe?: boolean;
+    indicacao?: boolean;
+    bigfone?: boolean;
+    protecao?: boolean;
+}
+
+export interface IParedao {
+    _id: number;
+    resultado: string[];
+    anjo?: {
+        from: string;
+        to: string;
+        autoimune: boolean;
+    }[];
+    votos: {
+        from: string;
+        to: string | null;
+        extra?: IVoteExtra;
+    }[];
+}
+
 export const PARTICIPANTES_BBB = [
     'alane',
     'beatriz',
