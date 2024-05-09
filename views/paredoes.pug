@@ -19,7 +19,7 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                             .flex.items-center.space-x-3
                                 .avatar
                                     .w-8.rounded
-                                        img(src=pFrom.imagem alt=pFrom.nomePopular)
+                                        img(src=`./bbb24/${pFrom._id.nome}.png` alt=pFrom.nomePopular)
                                 p.text-lg= pFrom.nomePopular
                         each paredao of paredoes.lista 
                             - var votosFrom = votos.filter(x => x.paredao == paredao._id && x.from == nFrom)
@@ -30,7 +30,7 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                     - var anjoTo = all_participants.filter(x => x._id.nome == votoAnjo.to)[0]
                                     .avatar
                                         .w-8.rounded.ring.ring-info
-                                            img(src=anjoTo.imagem alt=anjoTo.nomePopular title=anjoTo.nomePopular)
+                                            img(src=`./bbb24/${anjoTo._id.nome}.png` alt=anjoTo.nomePopular title=anjoTo.nomePopular)
                                 each voto of votosFrom
                                     if !voto.to.length
                                         - break
@@ -40,32 +40,32 @@ p.text-3xl.text-center.pb-4 Votos dados em paredões
                                         if voto.extra
                                             if voto.extra.indicacao
                                                 .w-8.rounded.ring.ring-error 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.veto
                                                 .w-8.rounded.ring.ring-warning 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.minerva
                                                 .w-8.rounded.ring.ring-success 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.contragolpe
                                                 .w-8.rounded.ring.ring-accent 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.group_vote
                                                 .w-8.rounded.ring.ring-primary 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.bigfone
                                                 .w-8.rounded.ring.ring-primary 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                             if voto.extra.protecao
                                                 .w-8.rounded.ring.ring-secondary 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                         else
                                             if paredao.resultado.includes(nTo)
                                                 .w-8.rounded.ring.ring-error 
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                             else
                                                 .w-8.rounded
-                                                    img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                                    img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
     
     .grid.grid-cols-2.flex.justify-center.py-4.gap-4
         .flex.items-center
@@ -119,7 +119,7 @@ p.text-2xl.text-center.py-4 Clique no número de votos para ver mais informaçõ
                             .flex.items-center.space-x-3
                                 .avatar
                                     .w-8.rounded
-                                        img(src=pTo.imagem alt=pTo.nomePopular title=pTo.nomePopular)
+                                        img(src=`./bbb24/${pTo._id.nome}.png` alt=pTo.nomePopular title=pTo.nomePopular)
                                 p.text-lg= pTo.nomePopular
                         each paredao, iParedao in paredoes.lista
                             - var votosTo = votos.filter(x => x.paredao == paredao._id && x.to == nTo)
