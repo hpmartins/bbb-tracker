@@ -1,4 +1,4 @@
-extends layout.pug
+extends ../layout.pug
 
 mixin estalecas(x)
     if x >= 0
@@ -33,6 +33,10 @@ mixin list_eliminados(list)
                     img(src=`./bbb24/${p._id.nome}.png` alt=p.nomePopular)
             .text-sm.font-bold.text-center= p.nomePopular
 
+block header
+    .divider.divider-primary
+    p.text-4xl.text-center.py-4 Coisas do BBB 24
+    
 block content
     .divider.divider-primary
     .w-full
