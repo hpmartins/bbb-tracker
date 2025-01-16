@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import asyncio
 from datetime import datetime
 import json
@@ -10,9 +12,13 @@ from aiohttp import ClientSession
 from apscheduler import AsyncScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from defaults import PARTICIPANTS, PARTICIPANT_BASE_URL
-from database import bbb_db
+from defaults import PARTICIPANTS
+from database import DB
 
+load_dotenv()
+
+PARTICIPANT_BASE_URL = os.getenv("PARTICIPANT_BASE_URL")
+PARTICIPANT_FETCH_INTERVAL = os.getenv("PARTICIPANT_FETCH_INTERVAL")
 
 def log(text: str):
     """Logs the given text with a timestamp."""
@@ -66,7 +72,7 @@ async def fetch_data(session: ClientSession, name: str) -> Optional[Dict]:
 async def check_eliminado(name: str) -> bool:
     """Checks if the participant has been eliminated."""
     data = (
-        await bbb_db["participants"]
+        await DB["participants"]
         .find({"_id.name": name})
         .sort("_id.modified_at", -1)
         .to_list(length=1)
@@ -79,7 +85,7 @@ async def check_eliminado(name: str) -> bool:
 async def get_last_modified(name: str) -> datetime:
     """Gets the last modified date for the participant."""
     data = (
-        await bbb_db["participants"]
+        await DB["participants"]
         .find({"_id.name": name})
         .sort("_id.modified_at", -1)
         .to_list(length=1)
@@ -98,7 +104,7 @@ async def update_participant(session: ClientSession, name: str):
     last_modified = await get_last_modified(name)
     if data and data["_id"]["modified_at"] > last_modified:
         log(f"Adding new data for {name}")
-        await bbb_db["participants"].insert_one(data)
+        await DB["participants"].insert_one(data)
 
 
 async def update_all():
@@ -114,7 +120,7 @@ async def main():
 
     async with AsyncScheduler() as scheduler:
         await scheduler.add_schedule(
-            update_all, CronTrigger.from_crontab("*/10 * * * *")
+            update_all, CronTrigger.from_crontab(PARTICIPANT_FETCH_INTERVAL)
         )
         await scheduler.run_until_stopped()
 

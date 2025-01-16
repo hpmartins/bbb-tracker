@@ -1,10 +1,3 @@
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-PARTICIPANT_BASE_URL = os.getenv("PARTICIPANT_BASE_URL")
-
 PARTICIPANTS = [
     "aline",
     "vinicius",

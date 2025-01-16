@@ -8,4 +8,4 @@ MONGO_URI = os.getenv("MONGO_URI")
 MONGO_DB = os.getenv("MONGO_DB")
 
 _client = AsyncMongoClient(MONGO_URI)
-bbb_db = _client["bbb25"]
+DB = _client[MONGO_DB]
