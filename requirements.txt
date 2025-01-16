@@ -1,0 +1,4 @@
+aiohttp==3.11.11
+APScheduler==4.0.0a5
+pymongo==4.10.1
+python-dotenv==1.0.1
