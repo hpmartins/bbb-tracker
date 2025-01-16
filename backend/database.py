@@ -4,7 +4,8 @@ from pymongo import AsyncMongoClient
 
 load_dotenv()
 
-MONGODB_URI = os.getenv("MONGODB_URI")
+MONGO_URI = os.getenv("MONGO_URI")
+MONGO_DB = os.getenv("MONGO_DB")
 
-_client = AsyncMongoClient(MONGODB_URI)
+_client = AsyncMongoClient(MONGO_URI)
 bbb_db = _client["bbb25"]

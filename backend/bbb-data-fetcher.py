@@ -10,9 +10,8 @@ from aiohttp import ClientSession
 from apscheduler import AsyncScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from defaults import PARTICIPANTES_BBB
+from defaults import PARTICIPANTS, PARTICIPANT_BASE_URL
 from database import bbb_db
-
 
 
 def log(text: str):
@@ -22,12 +21,12 @@ def log(text: str):
 
 async def fetch_data(session: ClientSession, name: str) -> Optional[Dict]:
     """Fetches participant data from the website."""
-    url = f"https://gshow.globo.com/realities/bbb/bbb-25/participantes/{name}/"
+    url = f"{PARTICIPANT_BASE_URL}/{name}"
     try:
         async with session.get(url) as response:
             text = await response.text()
             text = text.replace("\n", "").replace("  ", " ")
-            
+
             # found2 = re.findall(
             #     r'<script type="text/javascript">([\s\S]*?)</script>', text
             # )
@@ -52,7 +51,9 @@ async def fetch_data(session: ClientSession, name: str) -> Optional[Dict]:
                     return {
                         "_id": {
                             "name": name,
-                            "modified_at": datetime.fromisoformat(modified).replace(tzinfo=None),
+                            "modified_at": datetime.fromisoformat(modified).replace(
+                                tzinfo=None
+                            ),
                         },
                         "created_at": datetime.now(),
                         "data": participant_data,
@@ -65,7 +66,8 @@ async def fetch_data(session: ClientSession, name: str) -> Optional[Dict]:
 async def check_eliminado(name: str) -> bool:
     """Checks if the participant has been eliminated."""
     data = (
-        await bbb_db["participants"].find({"_id.name": name})
+        await bbb_db["participants"]
+        .find({"_id.name": name})
         .sort("_id.modified_at", -1)
         .to_list(length=1)
     )
@@ -77,7 +79,8 @@ async def check_eliminado(name: str) -> bool:
 async def get_last_modified(name: str) -> datetime:
     """Gets the last modified date for the participant."""
     data = (
-        await bbb_db["participants"].find({"_id.name": name})
+        await bbb_db["participants"]
+        .find({"_id.name": name})
         .sort("_id.modified_at", -1)
         .to_list(length=1)
     )
@@ -102,16 +105,19 @@ async def update_all():
     """Updates data for all participants."""
     log("Updating all participants...")
     async with aiohttp.ClientSession() as session:
-        tasks = [update_participant(session, name) for name in PARTICIPANTES_BBB]
+        tasks = [update_participant(session, name) for name in PARTICIPANTS]
         await asyncio.gather(*tasks)
+
 
 async def main():
     """Main function to schedule and run the updates."""
-    await update_all()
-    
+
     async with AsyncScheduler() as scheduler:
-        await scheduler.add_schedule(update_all, CronTrigger.from_crontab('*/20 * * * *'))
+        await scheduler.add_schedule(
+            update_all, CronTrigger.from_crontab("*/10 * * * *")
+        )
         await scheduler.run_until_stopped()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
